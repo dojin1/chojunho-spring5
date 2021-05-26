@@ -17,3 +17,15 @@
 - UTF8mb4(이모지까지 포함: 이모티콘 + 이미지)
 - 자바언어를 한다는 것은 컴파일 후 실행이 된다는 의미.->실습예정
 - 자바스크립트(파이썬)는 그냥 실행해서 프로그램이 만들어집니다.->실습예정
+
+#### 20210526(수)
+- 스프링MVC프로젝트: ModelViewController의 약자 MVC구조(웹 프로그램 구조)
+- src/test/java 폴더 만들었습니다. : 테스트작업은 이폴더에서 하라는 약속.
+- src/main/java 폴더가  진행할 프로그램작업을 하는 폴더.
+- javac HelloWorld.java -encoding UTF-8 (한글 내용도 컴파일됨)
+- 위 java 컴파일러로 실행한 결과 = HelloWorld.class 실행파일 생성됨.
+- 주의점) 클래스파일  실행은 패키지의 루트(최상위)에서 실행해야함.
+- kr.or.test 패키지 root폴더 src/test/java 폴더에서 실행해야함.
+- java kr.or.test.HelloWorld 클래스를 실행하게됨.
+- 이클립스 나오기 25년 전, javac 로 컴파일해서 class 프로그램을 만들었다.
+- 지금은 터미널에서 javac 사용하지않고 이클립스에서 바로 실행합니다.
