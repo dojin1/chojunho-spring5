@@ -38,7 +38,7 @@ public class step1 {
 		int[] ages = {10,18,28};
 		String[] phoneNums = {"000-0000-0000","111-1111-1111", "222-2222-2222"};
 		printMember(names, ages, phoneNums);//메서드를 1번만 호출하면 3명모두 출력.
-		//오버로드 (loading...)= 메서드명이 같습니다. 단, 로드된 파라미터 다른메서드를 호출.
+		//*오버로드 (loading...)= 메서드명이 같습니다. 단, 로드된 파라미터 다른메서드를 호출.
 	}
 
 	private static void printMember(String[] names, int[] ages, String[] phoneNums) {
