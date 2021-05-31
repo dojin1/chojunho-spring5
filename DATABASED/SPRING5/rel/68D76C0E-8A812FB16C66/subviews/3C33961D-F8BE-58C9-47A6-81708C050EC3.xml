@@ -1,0 +1,27 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Diagram class="oracle.dbtools.crest.swingui.relational.DPVRelational" name="Spring5" id="3C33961D-F8BE-58C9-47A6-81708C050EC3">
+<createdBy>ana27</createdBy>
+<modifiedBy>ana27</modifiedBy>
+<createdTime>2021-05-31 01:25:24 UTC</createdTime>
+<autoRoute>false</autoRoute>
+<boxInbox>true</boxInbox>
+<showLegend>false</showLegend>
+<showLabels>false</showLabels>
+<showRelAttributes>false</showRelAttributes>
+<gridEnabled>false</gridEnabled>
+<showGrid>false</showGrid>
+<diagramColor>-1</diagramColor>
+<display>false</display>
+<notation>1</notation>
+<showComments>true</showComments>
+<objectViews>
+<OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="13395D5D-725D-264E-4D21-377D90CE0B2B" otype="Table" vid="06459D0C-917A-21B4-EEEA-77B01A2116DA">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="3" y="3" width="369" height="112"/>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="588DC131-9379-AE9F-B03B-02768C026FE5" otype="Table" vid="E1967596-0DE9-8083-010E-8BFF0A5BEA21">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="7" y="175" width="170" height="110"/>
+</OView>
+</objectViews>
+</Diagram>
