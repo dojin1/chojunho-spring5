@@ -1,0 +1,11 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<UserOraclev10g class="oracle.dbtools.crest.model.design.storage.oracle.v10g.UserOraclev10g" name="XE" directorySegmentName="seg_0" id="EF358BC4-4853-44C1-63ED-431751F17D56">
+<sourceConnName>XE</sourceConnName>
+<sourceObjName>XE</sourceObjName>
+<createdBy>ana27</createdBy>
+<createdTime>2021-05-31 06:39:35 UTC</createdTime>
+<ownerDesignName>SPRING5</ownerDesignName>
+<schemaObject>6709E7F3-9A6C-0960-3CFC-6C432E3AE9B6</schemaObject>
+<defTableSpace>BC083F06-D4E2-B525-EDF3-235F3BDA9E3E</defTableSpace>
+<privileges>CREATE DIMENSION, CREATE MATERIALIZED VIEW, CREATE SEQUENCE, CREATE PROCEDURE, CREATE ANY CONTEXT, CREATE TYPE, CREATE SYNONYM, CREATE SESSION, CREATE JOB, CREATE VIEW, CREATE TABLE, CREATE OPERATOR, CREATE INDEXTYPE, CREATE TRIGGER, CREATE CLUSTER</privileges>
+</UserOraclev10g>
