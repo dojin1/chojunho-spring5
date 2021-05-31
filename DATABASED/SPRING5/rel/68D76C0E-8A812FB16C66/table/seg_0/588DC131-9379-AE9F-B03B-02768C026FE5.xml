@@ -75,6 +75,7 @@
 <Column name="REPLY_COUNT" id="EDF91880-A6A7-64AD-9F17-1064E042008D">
 <createdBy>ana27</createdBy>
 <createdTime>2021-05-31 02:49:48 UTC</createdTime>
+<commentInRDBMS><![CDATA[댓글카운트]]></commentInRDBMS>
 <ownerDesignName>SPRING5</ownerDesignName>
 <nullsAllowed>true</nullsAllowed>
 <useDomainConstraints>false</useDomainConstraints>
@@ -83,6 +84,46 @@
 <dataTypePrecision>11</dataTypePrecision>
 <ownDataTypeParameters>,11,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="REG_DATE" id="C9E4D052-F40D-8D90-118E-102C5751585A">
+<createdBy>ana27</createdBy>
+<createdTime>2021-05-31 03:03:35 UTC</createdTime>
+<commentInRDBMS><![CDATA[등록일시]]></commentInRDBMS>
+<ownerDesignName>SPRING5</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="UPDATE_DATE" id="56FC77DC-B8A6-BEC5-B248-BD036A7CD1BA">
+<createdBy>ana27</createdBy>
+<createdTime>2021-05-31 03:04:05 UTC</createdTime>
+<commentInRDBMS><![CDATA[수정일시]]></commentInRDBMS>
+<ownerDesignName>SPRING5</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="TBL_BOARD_TYPE_BOARD_TYPE" id="EDAA8F88-4A25-B3D4-277C-938EC6F17536">
+<createdBy>ana27</createdBy>
+<createdTime>2021-05-31 03:14:17 UTC</createdTime>
+<ownerDesignName>SPRING5</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20</dataTypeSize>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="9A7082B9-DB99-1F07-DDDC-1A1C4A3A0D28" referredColumn="C8921F9E-9487-802F-DAD7-B7A896F36BF6"/>
+</associations>
 </Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
@@ -95,6 +136,16 @@
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
 <colUsage columnID="7C64B87F-A3F3-C649-329E-939F25309971"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="6784A62A-E5C2-8FA2-782A-5BAD963281B4" name="TBL_BOARD_TBL_BOARD_TYPE_FK">
+<createdBy>ana27</createdBy>
+<createdTime>2021-05-31 03:14:17 UTC</createdTime>
+<ownerDesignName>SPRING5</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="EDAA8F88-4A25-B3D4-277C-938EC6F17536"/>
 </indexColumnUsage>
 </ind_PK_UK>
 </indexes>
