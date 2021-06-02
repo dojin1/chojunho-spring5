@@ -1,11 +1,11 @@
 package kr.or.test;
 /**
  * 내부변수와 배열 사용에 대해서 실습 클래스
- * @author 김일국
+ * @author 조준호
  *
  */
 public class Step1 {
-	public void Step1() { //클래스명과 같은 이름의 메서드를 생성자 매서드 자동으로 만들어 집니다. 
+	public Step1() { //클래스명과 같은 이름의 메서드를 생성자 매서드 자동으로 만들어 집니다. 
 		//자동으로 만들어 집니다.
 		//중요한 이유는 다른 클래스에서 Step1을 객체로 만들 때  생성자 메서드가 필요.
 		//Step1 aaa = new Step1();
