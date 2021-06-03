@@ -1,8 +1,0 @@
-<?xml version = '1.0' encoding = 'UTF-8'?>
-<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="SQL수업진도_20210603.sql" id="D6A2FAD3-23E2-E836-8DB6-F043E438E253" version="3.5">
-<createdBy>user</createdBy>
-<createdTime>2021-06-03 07:33:25 UTC</createdTime>
-<ownerDesignName>SQL수업진도_20210603.sql</ownerDesignName>
-<capitalNames>false</capitalNames>
-<designId>D6A2FAD3-23E2-E836-8DB6-F043E438E253</designId>
-</OSDM_Design>
