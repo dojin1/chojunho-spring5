@@ -56,7 +56,7 @@ public class DataSourceTest {
 		
 		//인서트,업데이트,삭제시 sql디벨러퍼에서는 커밋이 필수지만, 외부java클래스에서는 자동커밋이 됩니다.
 		//테이블에 입력되어 있는 레코드를 select 쿼리 stmt문장으로 가져옴(아래)
-		ResultSet rs = stmt.executeQuery("SELECT * FROM dept02 order by deptno");//20년전방식	
+		ResultSet rs = stmt.executeQuery("SELECT * FROM dept order by deptno");//20년전방식	
 		//위에서 저장된 rs객체를 반복문으로 출력(아래)
 		while(rs.next()) {
 			//rs객체의 레코드 
