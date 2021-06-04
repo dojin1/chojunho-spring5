@@ -48,11 +48,13 @@ public class DataSourceTest {
 		//stmt 객체가 없으면, 개발자가 SQL인젝션 방지코딩을 넣어야 합니다.
 		//Insert쿼리문장만듬(아래)
 		//예전방식으로 더미데이터 (샘플데이터)를 100개 입력합니다.
-		for(int cnt=0;cnt<100;cnt++) {
-			stmt.executeQuery("insert into dept02 values("+cnt+",'디자인부','경기도')");
-		}
+		
+		/*
+		 * for(int cnt=0;cnt<100;cnt++) {
+		 * stmt.executeQuery("insert into dept02 values("+cnt+",'디자인부','경기도')"); }
+		 */
+		
 		//인서트,업데이트,삭제시 sql디벨러퍼에서는 커밋이 필수지만, 외부java클래스에서는 자동커밋이 됩니다.
-		stmt.executeQuery("insert into dept02 values(20,'디자인부','경기도')");
 		//테이블에 입력되어 있는 레코드를 select 쿼리 stmt문장으로 가져옴(아래)
 		ResultSet rs = stmt.executeQuery("SELECT * FROM dept02 order by deptno");//20년전방식	
 		//위에서 저장된 rs객체를 반복문으로 출력(아래)
