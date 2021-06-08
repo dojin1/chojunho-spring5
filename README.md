@@ -9,17 +9,43 @@
 - 2달째부터(백엔드), 주로 스프링으로 실습이 진행(납품용-이력서포트폴리오용).
 - VS code에서 만든 UI를 이클립스에서 JSP로 변경 한 후 스프링웹프로젝트를 진행합니다.
 
-#### 20210608(화) 작업예정.
+#### 20210608(화) 작업.
+- 페이징에 사용되는 변수(쿼리변수+VO변수) 아래
+- queryStartNo, queryPerPageNum, page, perPageNum, startPage, endPage
+- 검색에 사용되는 변수(쿼리변수만): 검색어(search_keyword), 검색조건(search_type)
+
+```
+--SQL쿼리 페이징을 구현해서 변수로 삼을것을 정의
+--PageVO의 멤버변수로 사용예정
+SELECT TableB.* FROM
+(
+    SELECT ROWNUM AS RNUM, TableA.* FROM
+    (
+        SELECT * FROM tbl_member
+        WHERE user_id LIKE '%admin%'
+        OR user_name LIKE '%사용자8%'
+        ORDER BY reg_date DESC
+    ) TableA WHERE ROWNUM <= (1*5)+ 5 --  (page*b)+b
+) TableB WHERE TableB.RNUM > 1*5      --  (page*b)
+--페이징쿼리에서 필요한 변수는 2개
+--현재페이지수의 변수 page*b == queryStartNo
+--1페이당보여줄 개수의변수 b == queryPerPageNum
+--PageVO에서 필요한 추가변수: page
+--UI하단의 페이지 선택번호 출력할때 사용하는 변수(아래) 
+-- perPageNum 변수받아서 startPage, endPage 를 구해서
+-- 하단의 페이지 선택 번호를 출력
+```
 - 스프링코딩 작업순서 1부터6까지(아래)
 - 1. ERD를 기준으로 VO클래스를 생성.
 - M-V-C 사이에 데이터를 입출력하는 임시저장 공간(VO클래스-멤버변수+Get/Set메서드) 생성 
 - 보통 ValueObject클래스는 DB테이블과 1:1로 매칭이 됩니다.
-- 2. 매퍼쿼리(마이바티스사용)를 만듭니다.(VO사용해서쿼리생성)
-- 3. DAO(데이터엑세스오브젝트)클래스를 생성(SqlSession사용쿼리실행).*오늘 Sql세션은 root-context에 빈으로 만들었습니다.
-- IF인터페이스 만드는목적: 복잡한 구현클래스 간단하게 구조화시켜서 개발자가 관리하기
-- 편하게 정리하는 역할 -> 기사시험책 캡슐화 구현과 관련(알약 캡슐-안에 어떤약이 있는지모르게 먹게하기) 프로그램에서도 캡슐화는 구현내용을 몰라도, 이름만 보고 사용하게 만든것.
+- 2. 매퍼쿼리(마이바티스사용)를 만듭니다.(VO사용해서쿼리생성).
+- 3. DAO(데이터엑세스오브젝트,DTO)클래스를 생성(SqlSession사용쿼리실행).*Sql세션은 root-context에 빈으로 만들었습니다.(2개)
+- IF인터페이스는 만드는 목적: 복잡한 구현클래스 간단하게 구조화 시켜서 개발자가 관리하기 편하기 정리하는 역할 -> 기사시험책 캡슐화 구현과 관련(알약 캡슐-안에 어떤약이 있는모르게 먹게하기) 프로그램에서도 캡슐화는 구현 내용을 몰라도, 이름만 보고 사용하게 만든것.
 - 스프링 부트(간단한 프로젝트)에서는 4번 Service클래스가 없이 바로 컨트롤러로 이동합니다.
-- 4. Service(서비스)클래스생성(서비스에 쿼리결과를 담아 놓습니다.)
+- 4. Service(서비스)클래스생성(서비스에 쿼리결과를 담아 놓습니다.)(1개)
+- 게시물을 등록하는 서비스1개(tbl_board-DAO1+tbl_attach첨부-DAO2)
+- JUnit에서 위 작업한 내용을 CRUD 테스트(선배작업) -> 대리,사원에게 아래 작업을 맡김.
 - 5. Controller(컨트롤러)클래스생성(서비스결과를 JSP로 보냅니다.)
 - 6. JSP(View파일) 생성(컨트롤러의Model객체를 JSTL을 이용해 화면에 뿌려 줍니다.)
 	
