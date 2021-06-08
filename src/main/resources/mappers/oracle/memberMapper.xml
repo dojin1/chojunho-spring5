@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- Ctrl+Space 누르시면 입력힌트가 출력. -->
+<!-- 이 매퍼는 2개의 객체를 바인딩 시키는것 =>매핑.-->
+<!-- 이 매퍼는 회원관리 CRUD (입력,조회,수정,삭제)를 처리하는 쿼리를 모아놓은 파일-->
+<mapper namespace="memberMapper">
+<!-- 무조건 조회 쿼리 -->
+<select id="selectMember" resultType="com.edu.vo.MemberVO">
+select * from tbl_member
+</select>
+</mapper>
