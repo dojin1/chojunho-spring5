@@ -15,11 +15,11 @@ SELECT TB.* FROM
     SELECT ROWNUM AS RNUM, TA.* FROM
     (
         SELECT * FROM tbl_member
-        WHERE user_id LIKE '%#{search_keyword}%'
-        OR user_name LIKE '%#{search_keyword}%'
+        WHERE user_id LIKE '%'||#{search_keyword}||'%'
+        OR user_name LIKE '%'||#{search_keyword}||'%'
         ORDER BY reg_date DESC
-    ) TableA WHERE ROWNUM <= (#{queryStartNo}*#{queryPerPageNum})+#{queryPerPageNum}
-) TableB WHERE TAbleB.RNUM > #{queryStartNo}*#{queryPerPageNum}
+    ) TA WHERE ROWNUM <= (#{queryStartNo}*#{queryPerPageNum})+#{queryPerPageNum}
+) TB WHERE TB.RNUM > #{queryStartNo}*#{queryPerPageNum}
 ]]>
 </select>
 </mapper>
