@@ -43,4 +43,11 @@ public class MemberDAOImpl implements IF_MemberDAO{
 		sqlSession.insert("memberMapper.insertMember", memberVO);
 	}
 
+	@Override
+	public void deleteMember(String user_id) throws Exception {
+		// sqlSession 스프링빈의 메서드를 이용해서 매퍼쿼리를 실행(아래)\
+		sqlSession.delete("memberMapper.deleteMember", user_id); 
+		
+	}
+
 }
