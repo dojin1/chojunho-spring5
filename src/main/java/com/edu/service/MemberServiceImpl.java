@@ -32,5 +32,10 @@ public class MemberServiceImpl implements IF_MemberService                      
 		// 인젝션으로 주입받은 DAO객체를 사용합니다.(아래)
 		return memberDAO.countMember();
 	}
+	@Override
+	public void insertMember(MemberVO memberVO) throws Exception {
+		// 클래스 상단에서 인젝션으로 주입받은 DAO객체를 사용합니다(아래)
+		memberDAO.insertMember(memberVO);
+	}
 
 }

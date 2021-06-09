@@ -43,6 +43,20 @@ public class DataSourceTest {
 	@Inject //MemberService서비스를 주입받아서 객체를 사용합니다.(아래)
 	private IF_MemberService memberService;
 	
+	@Test
+	public void insertMember() throws Exception {
+		MemberVO memberVO = new MemberVO();
+		//insert 쿼리에 저장할 객체
+		memberVO.setUser_id("user_del");
+		memberVO.setUser_pw("1234");// 스프링시큐리티 5버전으로 암호화 처리예정.
+		memberVO.setEmail("user@test.com");
+		memberVO.setPoint(10);
+		memberVO.setEnabled(true);
+		memberVO.setLevels("ROLE_USER");
+		memberVO.setUser_name("삭제할사용자");
+		memberService.insertMember(memberVO);
+		selectMember();
+	}
 	//스프링 코딩 작업 순서(칠판으로 옮겨 놓았습니다.)
 	@Test
 	public void selectMember() throws Exception {
@@ -59,7 +73,7 @@ public class DataSourceTest {
 		pageVO.setQueryPerPageNum(10);//쿼리사용 페이지당 개수
 		pageVO.setTotalCount(memberService.countMember());//테스트하려고, 100명을 입력합니다.
 		pageVO.setSearch_type("user_id");//검색타입
-		pageVO.setSearch_keyword("admin");//검색어
+		pageVO.setSearch_keyword("user_del");//검색어
 		// 위 setTotalCount 위치가 다른 설정보다 상단이면, 에러발생 이유는, calPage()가 실행되는데, 실행시 위 3가지 변수값이 지정돼있어야지 계산 메서드가 정상작동됨.
 		// 위 토탈카운트 변수값은 startPage, endPage계산에 필수입니다.
 		// 매퍼쿼리_DAO클래스_Service클래스_Junit(나중엔 컨트롤러에서 작업) 이제 역순으로 작업진행.
@@ -71,7 +85,7 @@ public class DataSourceTest {
 	
 	@Test
 	public void oldQueryTest() throws Exception {
-		//스프링빈을 사용하지 않을때 예전 방식: 코딩테스트에서는 스프링설정을 안쓰고, 직접 DB 아이디/암호 입력
+		//스프링빈을 사용하지 않을때 예전 방식: 코딩테스트에s서는 스프링설정을 안쓰고, 직접 DB 아이디/암호 입력
 		Connection connection = null;
 		connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521/XE","XE","apmsetup");
 		logger.debug("데이터베이스 직접 접속이 성공 하였습니다. DB종류는 "+ connection.getMetaData().getDatabaseProductName());
