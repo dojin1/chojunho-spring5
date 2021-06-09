@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<!-- Ctrl+Space 누르시면 입력힌트가 출력. -->
-<!-- 이 매퍼는 2개의 객체를 바인딩 시키는것 =>매핑.-->
-<!-- 이 매퍼는 회원관리 CRUD (입력,조회,수정,삭제)를 처리하는 쿼리를 모아놓은 파일
-이번주 조회기능중 검색기능, 페이지처리기능을 실습하는것이 핵심
-다음처럼 비교해도 가능합니다. test='all'.equals(search_type)"
-참고로 equals 메서드를 사용하면 null비교까지 가능합니다.
-
--->
-
+<!-- Ctrl+Space 누르시면 입력힌트가 출력 -->
+<!-- 이 매퍼는 2개의 객체를 바인딩시키는 것을 매핑이라고 합니다.
+이 매퍼는 회원관리 CRUD(입력,조회,수정,삭제)를 처리하는 쿼리를 모아놓은 파일.
+이번주 조회기능중 검색기능, 페이징처리기능을 실습하시는 것이 핵심.
+ -->
 <mapper namespace="memberMapper">
-<!-- 공통쿼리 마이바티스 include문사용 -->
+<!-- 공통쿼리 마이바티스 include문사용, 
+if조건문에서 test조건부분에 문자열비교시 '문자열'.toString()형변환함수는 필수 필요 없으면 비교불가. 
+다음처럼 비교해도 가능합니다. test="''.equals(search_type)", 지금사용X 스프링클래스에서 사용O
+참고로 equals메서드를 사용하면 null비교까지 포함 됩니다.
+-->
 <sql id="sqlWhere">
-	<if test="search_type !='' and search_type != null">
+	<if test="search_type != '' and search_type != null">
     WHERE 
-       	<if test="search_type == 'all'.toString()">
-        	user_id LIKE '%'||#{search_keyword}||'%'
-       		OR user_name LIKE '%'||#{search_keyword}||'%'
-       	</if>
-       	<if test="search_type == 'user_id'.toString()">
-       	 	user_id LIKE '%'||#{search_keyword}||'%'
-       	</if>
-       	<if test="search_type == 'user_name'.toString()">
-        	user_name LIKE '%'||#{search_keyword}||'%'
-      	 </if>
-       </if>
+    	 <if test="search_type == 'all'.toString()">
+		    user_id LIKE '%'||#{search_keyword}||'%'
+		    OR user_name LIKE '%'||#{search_keyword}||'%'
+	     </if>
+	     <if test="search_type == 'user_id'.toString()">
+	     	user_id LIKE '%'||#{search_keyword}||'%'
+	     </if>
+	     <if test="search_type == 'user_name'.toString()">
+	     	user_name LIKE '%'||#{search_keyword}||'%'
+	     </if>
+    </if>
 </sql>
 <!-- jsp폼에서 전송받은 memberVO객체의 데이터를 DB에 insert합니다(아래) -->
 <insert id="insertMember">
