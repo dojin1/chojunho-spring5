@@ -59,9 +59,12 @@ public class DataSourceTest {
 		pageVO.setQueryPerPageNum(10);//쿼리사용 페이지당 개수
 		pageVO.setTotalCount(memberService.countMember());//테스트하려고, 100명을 입력합니다.
 		pageVO.setSearch_keyword("admin");
-		// 위 위치가 다른 설정보다 상단이면, 에러발생 이유는, calPage()가 실행되는데, 실행시 위 3가지 변수값이 지정돼있어야지 계산 메서드가 정상작동됨.
+		// 위 setTotalCount 위치가 다른 설정보다 상단이면, 에러발생 이유는, calPage()가 실행되는데, 실행시 위 3가지 변수값이 지정돼있어야지 계산 메서드가 정상작동됨.
 		// 위 토탈카운트 변수값은 startPage, endPage계산에 필수입니다.
-		List<MemberVO> listMember = memberService.selectMember();
+		// 매퍼쿼리_DAO클래스_Service클래스_Junit(나중엔 컨트롤러에서 작업) 이제 역순으로 작업진행.
+		// 더 진행하기 전에 현재 pageVO객체에는 어떤값이 들어있는지 확인하고 사용.(아래)
+		logger.info("pageVO저장된값확인:"+pageVO.toString());
+		List<MemberVO> listMember = memberService.selectMember(pageVO);
 		listMember.toString();
 	}
 	

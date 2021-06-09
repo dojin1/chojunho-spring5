@@ -9,6 +9,12 @@
 - 2달째부터(백엔드), 주로 스프링으로 실습이 진행(납품용-이력서포트폴리오용).
 - VS code에서 만든 UI를 이클립스에서 JSP로 변경 한 후 스프링웹프로젝트를 진행합니다.
 
+#### 20210609(수) 작업.
+- PageVO.java 클래스 생성 마무리OK
+- JUnit에서 위작업한 내용을 기준으로 selectMember() 테스트진행
+- <![CDATA[ 쿼리 ]]> : 태그 안쪽의 부등호를 사용하기 위해서 문자열 변환 태그를 사용.
+- 
+
 #### 20210608(화) 작업.
 - 페이징에 사용되는 변수(쿼리변수+VO변수) 아래
 - queryStartNo, queryPerPageNum, page, perPageNum, startPage, endPage

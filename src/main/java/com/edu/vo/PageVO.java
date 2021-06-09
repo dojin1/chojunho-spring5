@@ -20,6 +20,14 @@ public class PageVO {
 	private String search_keyword;// jsp에서 받은 검색어 쿼리전용 변수
 	private String search_type;// 검색조건에 해당되는 쿼리전용 변수
 	
+	
+	@Override
+	public String toString() {
+		return "PageVO [queryStartNo=" + queryStartNo + ", queryPerPageNum=" + queryPerPageNum + ", page=" + page
+				+ ", perPageNum=" + perPageNum + ", totalCount=" + totalCount + ", startPage=" + startPage
+				+ ", endPage=" + endPage + ", prev=" + prev + ", next=" + next + ", search_keyword=" + search_keyword
+				+ ", search_type=" + search_type + "]";
+	}
 	public int getQueryStartNo() {
 		//this.page-1 하는 이유는 jsp에서는 1,2,3...받지만,
 		//쿼리에서는 0,1,2...으로 사용되기 때문에, page * 1페이지당 보여줄 개수.
@@ -74,8 +82,11 @@ public class PageVO {
 		}
 		//--- 여기까지가 startPage, endPage를 구하는 계산식
 		//--- 이후는 prev, next 구하는 계산식
-		//UI하단의 페이지번호 상상 <(비활성) 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 >(활성-링크값10+1)
+		// UI하단의 페이지번호 상상
+		// <(비활성) 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 > (활성-링크값10+1)
+		// <(활성링크startPage-1)11,12,13,14,15,16,17,18,19,20>(활성-링크값endPage+1)
 		this.prev = (this.startPage > 1);//startPage가 1페이지 아닐때만 prev비활성화=false, 상상 - jsp로 구현하시고, 그때 결과보겠습니다.
+		// 이전버튼<(활성화시 링크값은 startPage-1), >다음버튼(활성화시 링크값은 endPage+1)
 		this.next = (this.endPage*this.queryPerPageNum) < this.totalCount;
 		//10*10=100 < 101이상이라서 next활성화 = true
 	}

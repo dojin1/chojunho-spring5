@@ -7,8 +7,19 @@
 <select id="countMember" resultType="int">
 select count(*) from tbl_member
 </select>
-<!-- 무조건 조회 쿼리 -->
+<!-- pageVO를 받아서 처리하는 조회 쿼리 -->
 <select id="selectMember" resultType="com.edu.vo.MemberVO">
-select * from tbl_member
+<![CDATA[]
+SELECT TB.* FROM
+    (
+    SELECT ROWNUM AS RNUM, TA.* FROM
+    (
+        SELECT * FROM tbl_member
+        WHERE user_id LIKE '%#{search_keyword}%'
+        OR user_name LIKE '%#{search_keyword}%'
+        ORDER BY reg_date DESC
+    ) TableA WHERE ROWNUM <= (#{queryStartNo}*#{queryPerPageNum})+#{queryPerPageNum}
+) TableB WHERE TAbleB.RNUM > #{queryStartNo}*#{queryPerPageNum}
+]]>
 </select>
 </mapper>
