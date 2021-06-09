@@ -20,11 +20,17 @@ import com.edu.vo.MemberVO;
 public class MemberServiceImpl implements IF_MemberService                                 {
 	@Inject //IF_MemberDAO를 주입해서 객체로 사용(아래)
 	private IF_MemberDAO memberDAO;
+	
 	@Override
 	public List<MemberVO> selectMember() throws Exception {
 		// 인터페이스에서 상속받은 메서드를 구현(아래)
 		List<MemberVO> listMember = memberDAO.selectMember();
 		return memberDAO.selectMember();
+	}
+	@Override
+	public int countMember() throws Exception {
+		// 인젝션으로 주입받은 DAO객체를 사용합니다.(아래)
+		return memberDAO.countMember();
 	}
 
 }

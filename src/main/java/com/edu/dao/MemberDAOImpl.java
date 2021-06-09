@@ -17,15 +17,22 @@ import com.edu.vo.MemberVO;
  *
  */
 @Repository
-public class MemberDAOImpl implements IF_MemberDAO {
-	@Inject // SqlSession 스프링빈을 주입합니다. = 고전에서 객체를생성.
+public class MemberDAOImpl implements IF_MemberDAO{
+	@Inject //SqlSession 의존성을 주입합니다.= 고전에서 객체를 생성
 	private SqlSession sqlSession;
 	
 	@Override //부모 인터페이스의 메서드를 상속해서 재정의 합니다.
 	public List<MemberVO> selectMember() throws Exception {
-		// SqlSession의 메서드를 이용해서 매퍼 쿼리를 사용.
+		// SqlSession의 메서드 이용해서 매퍼 쿼리를 사용
 		List<MemberVO> listMember = sqlSession.selectList("memberMapper.selectMember");
 		return listMember;
+	}
+
+	@Override
+	public int countMember() throws Exception {
+		// SqlSession빈의 메서드를 이용해서 매퍼 쿼리를 실행(아래)
+		int totalCount = sqlSession.selectOne("memberMapper.countMember");
+		return totalCount;
 	}
 
 }

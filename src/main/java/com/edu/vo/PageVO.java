@@ -8,8 +8,8 @@ package com.edu.vo;
  * startPage, endPage
  */
 public class PageVO {
-	private int queryStartNo;// 쿼리전용 변수
-	private int queryPerPageNum;// 쿼리전용
+	private int queryStartNo;// 쿼리전용 변수, 페이징쿼리에서 시작 페이지 인덱스번호표시 변수.
+	private int queryPerPageNum;// 쿼리전용, 페이징쿼리에서 1페이지당 출력할 개수표시 변수
 	private Integer page;// jsp에서발생 자바전용.int인데 Null값을 허용.
 	private int perPageNum;// UI 하단에 보여줄 페이징개수 계산에 필요
 	private int totalCount;// 계산식의 기초값으로 이 전체개수가 구해진 이후 페이지등의 계산식 진행.
@@ -23,7 +23,7 @@ public class PageVO {
 	public int getQueryStartNo() {
 		//this.page-1 하는 이유는 jsp에서는 1,2,3...받지만,
 		//쿼리에서는 0,1,2...으로 사용되기 때문에, page * 1페이지당 보여줄 개수.
-		queryStartNo = (this.page-1)*queryPerPageNum;
+		queryStartNo = (this.page-1)*queryPerPageNum;//쿼리에서 시작페이지의 인덱스 번호를사용
 		return queryStartNo;
 	}
 	public void setQueryStartNo(int queryStartNo) {
@@ -65,6 +65,19 @@ public class PageVO {
 		// 11페이지를 클릭하면, 임시 끝페이지가 20. 위 tempEnd변수값으로 아래내용에 이용 시작페이지를 계산하게 됩니다.
 		this.startPage = (tempEnd - this.perPageNum) + 1;//UI페이지 하단에 페이지 번호가 출력되도록 하는 반복의 시작 변수.
 		//예, 1-10까지는 page변수를 jsp에 클릭했을때, 시작페이지가 항상 1페이지,11부터는20까지 위 계산식을 이용하여 시작페이지가 11페이지가됨.	
+		// 위 startPage변수 jsp에서 반복문의 시작 값으로 사용, 지금 토탈개수는 101개
+		if(tempEnd*this.queryPerPageNum > this.totalCount) {
+			this.endPage = (int)Math.ceil((this.totalCount/(double)this.queryPerPageNum));
+			//위 계산식의 예를들면, (101/10) = ceil(10.1) = 11 (엔드페이지)    
+		}	else {
+			this.endPage = tempEnd;//20(엔드페이지)
+		}
+		//--- 여기까지가 startPage, endPage를 구하는 계산식
+		//--- 이후는 prev, next 구하는 계산식
+		//UI하단의 페이지번호 상상 <(비활성) 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 >(활성-링크값10+1)
+		this.prev = (this.startPage > 1);//startPage가 1페이지 아닐때만 prev비활성화=false, 상상 - jsp로 구현하시고, 그때 결과보겠습니다.
+		this.next = (this.endPage*this.queryPerPageNum) < this.totalCount;
+		//10*10=100 < 101이상이라서 next활성화 = true
 	}
 	public int getStartPage() {
 		return startPage;
