@@ -38,7 +38,7 @@
                 <option value="user_id">아이디</option>
                 <option value="user_name">이름</option>
               </select>
-              <input type="text" name="table_search" class="form-control float-left" placeholder="Search" style="width: inherit;">
+              <input type="text" name="search_keyword" class="form-control float-left" placeholder="Search" style="width: inherit;">
               <div class="input-group-append float-left" style="width: inherit;">
                 <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
               </div>
