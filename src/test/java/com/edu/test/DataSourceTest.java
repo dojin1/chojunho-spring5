@@ -131,7 +131,7 @@ public class DataSourceTest {
 		pageVO.setPage(1);// 기본값으로 1페이지를 입력합니다.
 		pageVO.setPerPageNum(10);//UI하단사용 페이지 개수
 		pageVO.setQueryPerPageNum(1000);//쿼리사용 페이지당 개수
-		pageVO.setTotalCount(memberService.countMember());//테스트하려고, 100명을 입력합니다.
+		//pageVO.setTotalCount(memberService.countMember(pageVO));//테스트하려고, 100명을 입력합니다.
 		//pageVO.setSearch_type("user_id");//검색타입
 		//pageVO.setSearch_keyword("user_del");//검색어
 		// 위 setTotalCount 위치가 다른 설정보다 상단이면, 에러발생 이유는, calPage()가 실행되는데, 실행시 위 3가지 변수값이 지정돼있어야지 계산 메서드가 정상작동됨.

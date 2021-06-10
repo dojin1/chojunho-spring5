@@ -28,9 +28,9 @@ public class MemberServiceImpl implements IF_MemberService                      
 	return memberDAO.selectMember(pageVO);
 	}
 	@Override
-	public int countMember() throws Exception {
+	public int countMember(PageVO pageVO) throws Exception {
 		// 인젝션으로 주입받은 DAO객체를 사용합니다.(아래)
-		return memberDAO.countMember();
+		return memberDAO.countMember(pageVO);
 	}
 	@Override
 	public void insertMember(MemberVO memberVO) throws Exception {
