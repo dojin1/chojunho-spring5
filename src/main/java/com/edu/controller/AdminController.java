@@ -44,7 +44,7 @@ public class AdminController {
 			pageVO.setPage(1);//초기값 1페이지 입력
 		}
 		//학습포인트: calcPage()로직 < 변수(객체)값의 이동확인(코딩)
-		pageVO.setQueryPerPageNum(10);//memberList객체 + endPage쿼리에 필요
+		pageVO.setQueryPerPageNum(5);//memberList객체 + endPage쿼리에 필요
 		pageVO.setPerPageNum(5);//startPage 구할때 필요.-UI하단 페이지개수
 		//위 2개 변수값을 이용해서 아래 setTotalCount메서드에서 calcPage()호출됨.
 		pageVO.setTotalCount(memberService.countMember(pageVO));
@@ -55,7 +55,7 @@ public class AdminController {
 		logger.info("디버그" + pageVO.toString());//지금까지 jsp->컨트롤러 일방향 자료이동.
 		//컨트롤러 에서 jsp로 자료를 Model에 담아서 보내게 됩니다.
 		model.addAttribute("listMember", listMember);
-		model.addAttribute
+		model.addAttribute("pageVO", pageVO);//나중에 @ModelAttribute로 대체
 		return "admin/member/member_list";//jsp파일 상대경로
 		
 	}
