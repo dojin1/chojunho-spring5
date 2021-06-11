@@ -93,7 +93,7 @@
           <ul class="pagination justify-content-center">
              
             <li class="paginate_button page-item previous <c:out value="${pageVO.prev==false?'disabled':''}"/>" id="example2_previous">
-              <a href="/admin/member/member_list?page=${pageVO.startPage-1}&search_keyword=${pageVO.search_keyword}&search_type=${pageVO.search_type}" aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
+              <a href="/admin/member/member_list?page=${pageVO.startPage-f1}&search_keyword=${pageVO.search_keyword}&search_type=${pageVO.search_type}" aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
             </li>
             
             <c:forEach begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1" var="idx">
