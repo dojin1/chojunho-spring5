@@ -35,7 +35,7 @@
           </div>
           <!-- /.card-header -->
           <!-- form start -->
-          <form id="form_view" name="form_view" action="/admin/member/member_update" method="post" enctype="multipart/form-data">
+          <form id="form_view" name="form_view" action="/admin/member/member_update_form" method="post" enctype="multipart/form-data">
             <!-- get방식은 검색, post방식은 글쓰기 로그인 등.(get방식하면 입력한 비밀번호가 주소에 뜸) -->
             <!-- enctype="multipart/form-data": 첨부파일을 전송할 때 필수로 들어가야 함. -->
             <div class="card-body">

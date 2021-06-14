@@ -31,12 +31,32 @@ public class AdminController {
    //이 메소드는 회원목록을 출력하는 jsp와 매핑이 됩니다.
    @Inject
    private IF_MemberService memberService;
-   
+   //아래 경로는 수정처리를 호출=DB를 변경처리함
+   @RequestMapping(value="admin/member/member_update", method=RequestMethod.POST)
+   public String updateMember() throws Exception{
+	   
+	   return null;
+   }
+   //아래경로는 수정폼을 호출=화면에 렌더링만 출력
+   @RequestMapping(value="/admin/member/member_update_form", method=RequestMethod.POST)
+   public String updateMemberForm(MemberVO memberVO, Model model,@ModelAttribute("pageVO")PageVO pageVO) throws Exception {
+	   //사용자 1명의 레코드를 가져오는 멤버서비스를(쿼리)를 실행(아래)
+	   MemberVO memberView = memberService.readMember(memberVO.getUser_id());
+	   //사용자 1명의 레코드를 model에 담아서 + @ModelAttribute에담아서 jsp로 보냅니다.
+	   model.addAttribute("memberVO", memberView);
+	   return "admin/member/member_update";//상대경로
+   }
    @RequestMapping(value="admin/member/member_delete", method=RequestMethod.POST)
    public String deleteMember(MemberVO memberVO) throws Exception {
+	   logger.info("디버그: " + memberVO.toString());
+	   //MemberVO memberVO 클래스형 변수: String user_id스트링형변수 와 같은방식.
+	   String user_id = memberVO.getUser_id();
 	   //이 메서드는 회원상세보기 페이지에서 삭제버튼을 클릭시 전송받은 memberVO값을 이용해서 삭제를 구현(아래)
-	   memberService.deleteMember(memberVO.getUser_id());
-	   return null;
+	   memberService.deleteMember(user_id);//삭제쿼리가 실행됨.
+	   //return "admin/member/member_list";//삭제후 이동할 jsp경로지정
+	   //위 방식대로 새로고침하면, /admin/member/member_insert 계속 실행됩니다.
+	   //게시판테러 상황을 방지하기 위해서, 쿼리를 작업 후 이동할때는 redirect(재접속)라는 명령을 사용합니다.
+	   return "redirect:/admin/member/member_list";//단,redirect는 절대경로를 사용.
    }
    @RequestMapping(value="/admin/member/member_view", method=RequestMethod.GET)
    public String viewMemberForm(Model model, @RequestParam("user_id")String user_id, @ModelAttribute("pageVO")PageVO pageVO) throws Exception {
