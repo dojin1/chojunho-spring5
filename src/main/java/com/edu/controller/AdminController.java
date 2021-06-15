@@ -32,7 +32,18 @@ public class AdminController {
 	//이 메서드는 회원목록을 출력하는 jsp와 매핑이 됩니다.
 	@Inject
 	private IF_MemberService memberService;
-	
+	//아래 경로는 회원신규등록 폼을 호출하는 URL쿼리스트링으로 보낸것을 받을때는 GET방식으로 받습니다.
+	@RequestMapping(value="/admin/member/member_insert_form", method=RequestMethod.GET)
+	public String insertMemberForm(@ModelAttribute("pageVO")PageVO pageVO) throws Exception {
+			
+		return "admin/member/member_insert";//.jsp는  생략
+	}
+	//아래 경로는 회원신규등록을 처리하는 서비스를 호출하는 URL
+	@RequestMapping(value="/admin/member/member_insert", method=RequestMethod.POST)
+	public String insertMember() throws Exception {
+		
+		return null;
+	}
 	//아래 경로는 수정처리를 호출=DB를 변경처리함.
 	@RequestMapping(value="/admin/member/member_update", method=RequestMethod.POST)
 	public String updateMember(MemberVO memberVO, PageVO pageVO) throws Exception {
