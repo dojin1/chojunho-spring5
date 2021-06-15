@@ -40,9 +40,13 @@ public class AdminController {
 	}
 	//아래 경로는 회원신규등록을 처리하는 서비스를 호출하는 URL
 	@RequestMapping(value="/admin/member/member_insert", method=RequestMethod.POST)
-	public String insertMember() throws Exception {
-		
-		return null;
+	public String insertMember(PageVO pageVO,MemberVO memberVO) throws Exception {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String rawPassword = memberVO.getUser_pw();//원시 패스워드값
+		String encPassword = passwordEncoder.encode(rawPassword);
+		memberVO.setUser_pw(encPassword);
+		memberService.insertMember(memberVO);
+		return "redirect:/admin/member/member_list";//.jsp생략
 	}
 	//아래 경로는 수정처리를 호출=DB를 변경처리함.
 	@RequestMapping(value="/admin/member/member_update", method=RequestMethod.POST)
