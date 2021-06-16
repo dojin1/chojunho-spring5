@@ -40,9 +40,9 @@ public class AdminController {
 	private IF_BoardTypeService boardTypeService;
 	//jsp에서 게시판생성관리에 Get/Post 접근할때 URL을 bbs_type로 지정합니다.
 	//board_type하지않고,bbs_type하는 이유는 왼쪽메뉴 고정시키는 로직에서 board와 겹치지 않도록 하기위해
-	@RequestMapping(value="/admin/bbs_type_list", method=RequestMethod.GET)
+	@RequestMapping(value="/admin/bbs_type/bbs_type_list", method=RequestMethod.GET)
 	public String selectBoardTypeList(Model model) throws Exception {//목록폼1
-		model.addAttribute("listBoardType",boardTypeService.selectBoardType());
+		model.addAttribute("listBoardTypeVO",boardTypeService.selectBoardType());
 		return "admin/bbs_type/bbs_type_list";//상대경로일때 view폴더가 root(최상위)
 	}
 	//bbs_type_list.jsp에서 게시판생성 버튼을 클랙했을때 이동하는 폼 경로
@@ -54,7 +54,10 @@ public class AdminController {
 	@RequestMapping(value="/admin/bbs_type/bbs_type_insert", method=RequestMethod.POST)
 	public String insertBoardType(BoardTypeVO boardTypeVO) throws Exception {//입력처리1
 		boardTypeService.insertBoardType(boardTypeVO);
-		return "redirect:/admin/bbs_type/bbs_type_list";//redirect는 절대경로(뒤로가기X). forward:이동가능(뒤로가기)
+		return "redirect:/admin/bbs_type/bbs_type_list";
+		//redirect는 절대경로(뒤로가기X). forward:이동가능(뒤로가기)
+		//쇼핑몰에서 결제화면을 처리 후 뒤로가기를 누르면  리다이렉트는 데이터가 사라지기때문에 재결제 불가
+		//forward로 결제화면을 처리 후 뒤로가기 누르면 재결제가 발생됩니다. 이러면안되기 때문에 사용안함.
 	}
 	//게시판 생성관리 이 기능은 사용자단에서 UI를 사용할 일이 없기 때문에 Read, Update 를 1개로 사용.
 	@RequestMapping(value="/admin/bbs_type/bbs_type_update", method=RequestMethod.GET)
