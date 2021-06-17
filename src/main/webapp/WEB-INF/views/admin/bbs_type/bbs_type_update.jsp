@@ -55,7 +55,7 @@
 
             <div class="card-footer text-right">
               <button type="submit" class="btn btn-primary">수정</button>
-              <button type="button" class="btn btn-warning" id="btn_delete">삭제</button>
+              <button type="button" class="btn btn-danger" id="btn_delete">삭제</button>
               <a href="/admin/bbs_type/bbs_type_list" class="btn btn-default">목록</a>
             </div>
           </form>
