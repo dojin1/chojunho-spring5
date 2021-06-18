@@ -12,7 +12,7 @@ delete from tbl_attach where save_file_name = #{save_file_name}
 <!-- 왜 수정이 없는가-> 저장된파일을 수정못하고, 기존삭제하고, 신규파일을 덮어씁니다. 단 bno를 매개변수 받습니다. -->
 <insert id="updateAttach">
 insert into tbl_attach (save_file_name, real_file_name, reg_date, bno)
-values (#{save_file_name},#{real_file_name},sysdate,#{})
+values (#{save_file_name},#{real_file_name},sysdate,#{bno})
 </insert>
 <select id="readAttach" resultType="com.edu.vo.AttachVO">
 select * from tbl_attach where bno = #{bno}
@@ -25,12 +25,16 @@ insert into tbl_attach
 )
 values
 (
-	#{save_filr_name},#{real_file_name},sysdate,
-	select bno from (
-		select bno from tbl_board order by bno desc
-	) where rownum = 1
+	#{save_filr_name},#{real_file_name},sysdate,#{bno}
+	
 )
 </insert>
+<!-- bno를 변수값으로 받는 로직을 추가 했기 때문에 아래 주석 처리
+	select bno from (
+			select bno from tbl_board order by bno desc
+	) 	where rownum = 1
+-->
+
 <!--  위 bno는 게시물 등록시 첨부파일 쿼리는 bno 매개변수로 보낼 수가 없는 상태 임.-->
 <!-- 게시물CRUD 쿼리생성 -->
 <delete id="deleteBoard">
@@ -55,8 +59,8 @@ where bno = #{bno}
 select * from tbl_board where bno = #{bno}
 </select>
 <!-- bno필드변수가 자동증가가 되는 기능이 필요 seq.nextVal -->
-<insert id="insertBoard">
-	<selectKey keyProperty="seq_bno" resultType="int" order="BEFORE">
+<insert id="insertBoard" parameterType="com.edu.vo.BoardVO">
+	<selectKey keyProperty="bno" resultType="int" order="BEFORE">
 	select seq_bno.nextval from dual
 	</selectKey>
 	insert into tbl_board 
@@ -65,7 +69,7 @@ select * from tbl_board where bno = #{bno}
 	) 
 	values 
 	(
-	#{seq_bno},#{title},#{content},#{writer},systimestamp,#{board_type}
+	#{bno},#{title},#{content},#{writer},systimestamp,#{board_type}
 	)
 </insert>
 <!-- 페이징을 제외한 검색쿼리(board_type포함)를 이용해서 게시물 개수 totalCount변수값 구하기 -->
