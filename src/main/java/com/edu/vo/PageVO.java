@@ -8,6 +8,7 @@ package com.edu.vo;
  * startPage, endPage
  */
 public class PageVO {
+	private String board_type;// 게시판 종류를 표시하는 전용 변수
 	private int queryStartNo;// 쿼리전용 변수, 페이징쿼리에서 시작 페이지 인덱스번호표시 변수.
 	private int queryPerPageNum;// 쿼리전용, 페이징쿼리에서 1페이지당 출력할 개수표시 변수
 	private Integer page;// jsp에서발생 자바전용.int인데 Null값을 허용.
@@ -19,7 +20,13 @@ public class PageVO {
 	private boolean next;// UI하단 다음 페이지로 이동이 가능한지 판별하는 변수.
 	private String search_keyword;// jsp에서 받은 검색어 쿼리전용 변수
 	private String search_type;// 검색조건에 해당되는 쿼리전용 변수
-	
+	//Get,Set용 메서드 추가
+	public String getBoard_type() {
+		return board_type;
+	}
+	public void setBoard_type(String board_type) {
+		this.board_type = board_type;
+	}
 	
 	@Override
 	public String toString() {
@@ -28,6 +35,7 @@ public class PageVO {
 				+ ", endPage=" + endPage + ", prev=" + prev + ", next=" + next + ", search_keyword=" + search_keyword
 				+ ", search_type=" + search_type + "]";
 	}
+	
 	public int getQueryStartNo() {
 		//this.page-1 하는 이유는 jsp에서는 1,2,3...받지만,
 		//쿼리에서는 0,1,2...으로 사용되기 때문에, page * 1페이지당 보여줄 개수.

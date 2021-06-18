@@ -1,5 +1,5 @@
 --SQL쿼리 페이징을 구현해서 변수로 삼을것을 정의-아래쿼리에서 상수를 변수처리
---PageVO의 멤버변수로 사용예정 -> 게시물 일때..
+--PageVO의 멤버변수로 사용예정 -> 게시물 때문에 board_type 멤버변수로 추가
 SELECT TableB.* FROM
 (
     SELECT ROWNUM AS RNUM, TableA.* FROM
@@ -9,10 +9,10 @@ SELECT TableB.* FROM
         and (title LIKE '%%'
         OR content LIKE '%%')
         ORDER BY reg_date DESC
-    ) TableA WHERE ROWNUM <= (0*5)+ 5 -- 0부터 선택한 페이지까지 출력.
-) TableB WHERE TableB.RNUM > 0*5 --1페이지당 보여줄 개수만 출력
+    ) TableA WHERE ROWNUM <= (2*5)+ 5 -- 0부터 선택한 페이지까지 출력.
+) TableB WHERE TableB.RNUM > 2*5 --1페이지당 보여줄 개수만 출력
 --페이징쿼리에서 필요한 변수는 2개
---현재페이지수의 변수 page*b == queryStartNo
+--현재페이지수의 변수 page*queryperpagenum == queryStartNo
 --1페이당보여줄 개수의변수 b == queryPerPageNum
 --PageVO에서 필요한 추가변수: page
 --UI하단의 페이지 선택번호 출력할때 사용하는 변수(아래) 
