@@ -1,22 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp" %>
-    pageEncoding="UTF-8"%>
-<%@ include file="../include/header.jsp"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<!-- Content Wrapper. Contains page content -->
+  <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">${pageVO.board_type}리스트</h1>
+            <h1 class="m-0">${pageVO.board_type} 리스트</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">${pageVO.board_type}게시물관리</li>
+              <li class="breadcrumb-item active">${pageVO.board_type} 게시물관리</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -47,22 +45,21 @@
                       <i class="fas fa-search"></i>
                     </button>
                   </div>
-                  <input type="hidden" value="${pageVO.board_type}" name="board_type">                                
+                  <%-- <input type="hidden" value="${pageVO.board_type}" name="board_type">   --%>                              
                 </form>
               </div>
-              
               <!-- //내용검색 폼 -->
             </div>
           </div>
           <!-- /.card-header -->
           <div class="card-body table-responsive p-0">
             <table class="table table-hover">
-              <!-- 줄바꿈 하지 않을 때 다음 클래스추가 text-nowrap  -->
+              <!-- 줄바꿈않할때 다음 클래스추가 text-nowrap  -->
               <thead>
                 <tr>
                   <th class="text-center">BNO</th>
                   <th class="text-center">BOARD_TYPE</th>
-                  <th class="text-center col-6">TITLE</th>
+                  <th class="text-center">TITLE</th>
                   <th class="text-center">WRITER</th>
                   <th class="text-center">REG_DATE</th>
                 </tr>
@@ -70,15 +67,16 @@
               <tbody>
                 <!-- 아래 링크주소에 jsp에서 프로그램처리예정 -->
                 <c:forEach var="boardVO" items="${listBoardVO}">
-                 <tr style="cursor: pointer;" onclick="location.replace('/admin/board/board_view?bno=${boardVO.bno}');">
+                <tr style="cursor: pointer;" onclick="location.replace('/admin/board/board_view?bno=${boardVO.bno}');">
                   <td>${boardVO.bno}</td>
                   <td>${boardVO.board_type}</td>
-                  <td>${boardVO.title }</td>
+                  <td>${boardVO.title}</td>
                   <td>${boardVO.writer}</td>
                   <td><fmt:formatDate pattern="yyyy-MM-dd hh:MM:ss.SSSS" value="${boardVO.reg_date}"/></td>
                 </tr>
                 </c:forEach>
-                         
+                
+                <!-- 발생한 세션값 확인<c:out value="${session_board_type}" /> -->
               </tbody>
             </table>
           </div>
@@ -87,15 +85,15 @@
         <!-- //콘텐츠 내용 -->
         <!-- 페이징 처리 -->
         <div class="col-12 text-right">
-          <a href="board_write.html" class="btn btn-primary mb-3">글쓰기</a>
+          <a href="/admin/board/board_insert" class="btn btn-primary mb-3">글쓰기</a>
           <ul class="pagination justify-content-center">
-              <li class="paginate_button page-item previous ${pageVO.prev==false?'disabled':'' }" id="example2_previous">
+              <li class="paginate_button page-item previous ${pageVO.prev==false?'disabled':''}" id="example2_previous">
                 <a href="/admin/board/board_list?page=${pageVO.startPage-1}&search_type=${pageVO.search_type}&search_keyword=${pageVO.search_keyword}" aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
               </li>
-              <!--사용기준: 향상된for(주로사용-시스템부담이 덜함), 일반for문(시작,끝값이 정해진 로직에서 사용)-->
+              <!-- 사용기준: 향상된for(주로사용-시스템부담이 작아짐), 일반for문(시작,끝값이 정해진 로직에서 사용) -->
               <c:forEach begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1" var="idx">
               <li class="paginate_button page-item ${pageVO.page==idx?'active':''}">
-                <a href="/admin/board/board_list?page=${pageVO.page}&search_type=${pageVO.search_type}&search_keyword=${pageVO.search_keyword}" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">${idx}</a>
+                <a href="/admin/board/board_list?page=${idx}&search_type=${pageVO.search_type}&search_keyword=${pageVO.search_keyword}" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">${idx}</a>
               </li>
               </c:forEach>
               <li class="paginate_button page-item next ${pageVO.next==false?'disabled':''}" id="example2_next">
@@ -109,6 +107,5 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-<%@ include file="../include/footer.jsp"%>
 
 <%@ include file="../include/footer.jsp" %>
