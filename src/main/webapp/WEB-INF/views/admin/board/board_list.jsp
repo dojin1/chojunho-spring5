@@ -89,29 +89,17 @@
         <div class="col-12 text-right">
           <a href="board_write.html" class="btn btn-primary mb-3">글쓰기</a>
           <ul class="pagination justify-content-center">
-              <li class="paginate_button page-item previous disabled" id="example2_previous">
-                <a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
+              <li class="paginate_button page-item previous ${pageVO.prev==false?'disabled':'' }" id="example2_previous">
+                <a href="/admin/board/board_list?page=${pageVO.startPage-1}&search_type=${pageVO.search_type}&search_keyword=${pageVO.search_keyword}" aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
               </li>
-              <li class="paginate_button page-item active">
-                <a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">1</a>
+              <!--사용기준: 향상된for(주로사용-시스템부담이 덜함), 일반for문(시작,끝값이 정해진 로직에서 사용)-->
+              <c:forEach begin="${pageVO.startPage}" end="${pageVO.endPage}" step="1" var="idx">
+              <li class="paginate_button page-item ${pageVO.page==idx?'active':''}">
+                <a href="/admin/board/board_list?page=${pageVO.page}&search_type=${pageVO.search_type}&search_keyword=${pageVO.search_keyword}" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">${idx}</a>
               </li>
-              <li class="paginate_button page-item ">
-                <a href="#" aria-controls="example2" data-dt-idx="2" tabindex="0" class="page-link">2</a>
-              </li>
-              <li class="paginate_button page-item ">
-                <a href="#" aria-controls="example2" data-dt-idx="3" tabindex="0" class="page-link">3</a>
-              </li>
-              <li class="paginate_button page-item ">
-                <a href="#" aria-controls="example2" data-dt-idx="4" tabindex="0" class="page-link">4</a>
-              </li>
-              <li class="paginate_button page-item ">
-                <a href="#" aria-controls="example2" data-dt-idx="5" tabindex="0" class="page-link">5</a>
-              </li>
-              <li class="paginate_button page-item ">
-                <a href="#" aria-controls="example2" data-dt-idx="6" tabindex="0" class="page-link">6</a>
-              </li>
-              <li class="paginate_button page-item next" id="example2_next">
-                <a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
+              </c:forEach>
+              <li class="paginate_button page-item next ${pageVO.next==false?'disabled':''}" id="example2_next">
+                <a href="/admin/board/board_list?page=${pageVO.endPage+1}&search_type=${pageVO.search_type}&search_keyword=${pageVO.search_keyword}" aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link">Next</a>
               </li>
           </ul>
         </div>
