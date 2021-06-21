@@ -46,9 +46,11 @@
                     <button type="submit" class="btn btn-default">
                       <i class="fas fa-search"></i>
                     </button>
-                  </div>                                
+                  </div>
+                  <input type="hidden" value="${pageVO.board_type}" name="board_type">                                
                 </form>
               </div>
+              
               <!-- //내용검색 폼 -->
             </div>
           </div>
