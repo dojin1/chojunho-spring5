@@ -26,9 +26,9 @@ if조건문에서 test조건부분에 문자열비교시 '문자열'.toString()�
 	     </if>
     </if>
 </sql>
-<!-- jsp수정페이지에 수정할 내용을 입력하는 쿼리(아래)
-사용자 정보 수정시 매번 암호를 넣지 않기 떄문에, 조건을 달아서 암호변경값이 있을때만 수정되게 처리.
- -->
+<!-- jsp수정페이지에 수정할 내용을 입력하는 쿼리(아래) 
+사용자 정보 수정시 매번 암호를 넣지 않기 때문에, 조건을 달아서 암호변경값이 있을때만 수정되게 처리
+-->
 <update id="updateMember">
 	update tbl_member set
 	email = #{email},
@@ -37,22 +37,22 @@ if조건문에서 test조건부분에 문자열비교시 '문자열'.toString()�
 	point = #{point},
 	update_date = systimestamp,
 	<if test="user_pw != ''">
-	user_pw =  #{user_pw},
+	user_pw = #{user_pw},
 	</if>
 	user_name = #{user_name}
 	where user_id = #{user_id}
 </update>
-<!-- jsp상세보기에 출력할 내용을 뽑아내는 쿼리(아래) -->
+<!-- jsp상세보기에 출력할 내용을 뽑아내는 쿼리 -->
 <select id="readMember" resultType="com.edu.vo.MemberVO">
 select * from tbl_member where user_id = #{user_id}
 </select>
-<!-- jsp폼에서 전송받은 user_id값의 데이터를 이용해서 DB에 해당 레코드를 삭제합니다.(아래) -->
+<!-- jsp폼에서 전송받은 user_id값의 데이터를 이용해서 dB에 해당레코드를 삭제(아래) -->
 <delete id="deleteMember">
 delete from tbl_member where user_id = #{user_id}
 </delete>
 <!-- jsp폼에서 전송받은 memberVO객체의 데이터를 DB에 insert합니다(아래) -->
 <insert id="insertMember">
-insert into tbl_member
+insert into tbl_member 
 (
 user_id,
 user_pw,
@@ -62,8 +62,8 @@ point,
 enabled,
 levels,
 reg_date
-)
-values
+) 
+values 
 (
 #{user_id},
 #{user_pw},
@@ -75,27 +75,26 @@ values
 systimestamp
 )
 </insert>
-<!-- 현재처럼 무조건 개수를 구하면, 검색결과에 대한 페이징 값을 구할 수 없음.
-그래서 검색이 포함된 카운트개수가 나와야함. 이래쿼리는 검색한 전체개수를 구한쿼리 결과를
-PageVO클래스의 calcPage() 메서드 사용 -->
+<!-- 현재처럼 무조건 갯수를 구하면, 검색결과에 대한 페이징 값을 구할 수 없음.
+그래서 검색이 포함된 카우트개수가 나와함. 아래쿼리는 검색한 전체개수를 구한쿼리 
+이 결과를 PageVO클래스의 calcPage()메서드 사용 -->
 <select id="countMember" resultType="int">
 	select count(*) from tbl_member
-	<include refid="sqlWhere"/>
+	<include refid="sqlWhere" />
 </select>
-<!-- pageVO를 받아서 처리하는 조회 쿼리 -->
+<!-- pageVO 받아서 처리하는 조회 쿼리 -->
 <select id="selectMember" resultType="com.edu.vo.MemberVO">
-
-SELECT TB.* FROM
-    (
-    SELECT ROWNUM AS RNUM, TA.* FROM
+SELECT TableB.* FROM
+(
+    SELECT ROWNUM AS RNUM, TableA.* FROM
     (
         SELECT * FROM tbl_member
         <include refid="sqlWhere" />
         ORDER BY reg_date DESC
-    ) TA
-<![CDATA[
-     WHERE ROWNUM <= (#{queryStartNo}*#{queryPerPageNum})+#{queryPerPageNum}
-) TB WHERE TB.RNUM > #{queryStartNo}*#{queryPerPageNum}
+    ) TableA
+<![CDATA[ 
+    WHERE ROWNUM <= #{queryStartNo}+#{queryPerPageNum}
+) TableB WHERE TableB.RNUM > #{queryStartNo}
 ]]>
 </select>
 </mapper>

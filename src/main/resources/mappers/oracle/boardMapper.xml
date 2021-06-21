@@ -2,22 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="boardMapper">
 <!-- 첨부파일 CRUD 쿼리생성, 주,우리로직에서는 첨부파일은 수정X->입력,삭제 -->
-<!-- 첨부파일 삭제는 1개만 삭제하지않고, 게시물별(bno) 일괄삭제도 있음 -->
+<!-- 첨부파일 삭제는 1개만 삭제하지 않고, 게시물별(bno) 일괄삭제도 있음. -->
 <delete id="deleteAttachAll">
 delete from tbl_attach where bno = #{bno}
 </delete>
 <delete id="deleteAttach">
 delete from tbl_attach where save_file_name = #{save_file_name}
 </delete>
-<!-- 왜 수정이 없는가-> 저장된파일을 수정못하고, 기존삭제하고, 신규파일을 덮어씁니다. 단 bno를 매개변수 받습니다. -->
+<!-- 왜 수정이 없는가-> 저장된파일을 수정못하고, 기존삭제하고, 신규파일을 덮어씁니다.단,bno를 매개변수 받습니다.-->
 <insert id="updateAttach">
-insert into tbl_attach (save_file_name, real_file_name, reg_date, bno)
+insert into tbl_attach (save_file_name,real_file_name,reg_date,bno)
 values (#{save_file_name},#{real_file_name},sysdate,#{bno})
 </insert>
 <select id="readAttach" resultType="com.edu.vo.AttachVO">
 select * from tbl_attach where bno = #{bno}
-</select>
-<!-- 게시물 등록시 발생된 bno구하기 결과값 1개만 구해서 bno입력값으로 사용 -->
+</select> 
+<!-- 게시물등록시 발생된 bno를 구한 결과값 1개만 구해서 첨부파일의 bno입력값으로 사용-서브쿼리사용 -->
 <insert id="insertAttach">
 insert into tbl_attach 
 (
@@ -25,17 +25,17 @@ insert into tbl_attach
 )
 values
 (
-	#{save_filr_name},#{real_file_name},sysdate,#{bno}
+	#{save_file_name},#{real_file_name},sysdate,#{bno}
 	
 )
 </insert>
-<!-- bno를 변수값으로 받는 로직을 추가 했기 때문에 아래 주석 처리
-	select bno from (
-			select bno from tbl_board order by bno desc
-	) 	where rownum = 1
--->
-
-<!--  위 bno는 게시물 등록시 첨부파일 쿼리는 bno 매개변수로 보낼 수가 없는 상태 임.-->
+<!-- 
+bno 변수값으로 받는 로직을 추가했기때문에 아래 주석
+select bno from (
+		select bno from tbl_board order by bno desc
+	) where rownum = 1
+ -->
+<!-- 위 bno는 게시물 등록시 첨부파일 쿼리는 bno 매개변수로 보낼 수가 없는 상태 임. -->
 <!-- 게시물CRUD 쿼리생성 -->
 <delete id="deleteBoard">
 delete from tbl_board where bno = #{bno}
@@ -58,7 +58,9 @@ where bno = #{bno}
 <select id="readBoard" resultType="com.edu.vo.BoardVO">
 select * from tbl_board where bno = #{bno}
 </select>
-<!-- bno필드변수가 자동증가가 되는 기능이 필요 seq.nextVal -->
+<!-- bno필드변수가 자동증가가 되는 기능이 필요 seq.nextVal 
+parameterType 출력처리 OK.
+-->
 <insert id="insertBoard" parameterType="com.edu.vo.BoardVO">
 	<selectKey keyProperty="bno" resultType="int" order="BEFORE">
 	select seq_bno.nextval from dual
@@ -72,10 +74,10 @@ select * from tbl_board where bno = #{bno}
 	#{bno},#{title},#{content},#{writer},systimestamp,#{board_type}
 	)
 </insert>
-<!-- 페이징을 제외한 검색쿼리(board_type포함)를 이용해서 게시물 개수 totalCount변수값 구하기 -->
+<!-- 페이징을 제외한 검색쿼리(board_type포함)를 이용해서 개수물 개수totalCount변수값 구하기 -->
 <select id="countBoard" resultType="int">
 select count(*) from tbl_board
-<include refid="sqlWhere"/>
+<include refid="sqlWhere" />
 </select>
 <!-- 페이징 처리 때문에 중첩쿼리 생성(아래) -->
 <select id="selectBoard" resultType="com.edu.vo.BoardVO">
@@ -87,8 +89,8 @@ select table_b.* from
 		<include refid="sqlWhere" />
 	) table_a
 	<![CDATA[
-	where rownum <= (#{queryStartNo}*#{queryPerPageNum})+#{queryPerPageNum}
-) table_b where table_b.rnum > #{queryStartNo}*#{queryPerPageNum}
+	where rownum <= #{queryStartNo}+#{queryPerPageNum}
+) table_b where table_b.rnum > #{queryStartNo}
 	]]>
 </select>
 <!-- 검색처리는 멤버쿼리에서 작성한 내용 붙여넣고, 다중게시판용 필드조회조건 추가 PageVO -->
