@@ -34,7 +34,7 @@
           <!-- /.card-header -->
           <!-- form start -->
           <!-- 첨부파일을 전송할때 enctype=필수 없으면, 첨부파일이 전송X -->
-          <form name="form_view" action="/admin/board/board_update_form" enctype="multipart/form-data">
+          <form name="form_view" method="post" action="/admin/board/board_update_form" enctype="multipart/form-data">
             <div class="card-body">
               <div class="form-group">
                 <label for="exampleInputEmail1">제목</label>
@@ -67,7 +67,7 @@
 	                <c:if test="${boardVO.save_file_names[idx] != null}">
 	                <div class="input-group">
 	                  <div class="custom-file">
-	                  	<!-- 첨부파일을 URL로 직접접근하지 못하기 때문에 다운로드전용 메서드생성 -->
+	                  	<!-- 첨부파일을 URL로 직접접근하지 못하기 때문에 컨트롤러로만 접근이 가능(다운로드전용 메서드생성) -->
 	                    <a href="/download?save_file_name=${boardVO.save_file_names[idx]}&real_file_name=${boardVO.real_file_names[idx]}">
 	                    ${boardVO.real_file_names[idx]}
 	                    </a>
@@ -75,18 +75,18 @@
 	                    	String[] fileNameArray = String.split('변수값','분할기준값');
 	                    -->
 	                    <c:set var="fileNameArray" value="${fn:split(boardVO.save_file_names[idx],'.')}" />
-	                    <!-- 그림판.얼굴.jpg = 3개배열, 그림판.jpg = 2개배열-->
-	                    <c:set var="extName" value="${fileNameArray[fn:length(fileNameArray)]-1}" />
-	                    <!-- 그림판.얼굴.jpg 파일을 위 변수로 처리시 extName = fineNameArray[2] = jgg -->
-	                    <!-- 자바언어로는 switch ~case문  ~default (아래 choose) -->
-	                    <!-- containsIgnoreCase('찾을값의문장', '비교기준값') -->
+	                    <!-- 그림판.얼굴.코.JPG = 3개배열, 그림판.jpg = 2개배열 -->
+	                    <c:set var="extName" value="${fileNameArray[fn:length(fileNameArray)-1]}" />
+	                    <!-- 그림판.얼굴.jpg 파일을 위 변수로 처리시 extName = fineNameArray[2] = jpg -->
+	                    <!-- 자바언어로는 switch ~ case문 ~ default -->
+	                    <!-- containsIgnoreCase('찾을값의문장','비교기준값') -->
 	                    <c:choose>
-	                    	<c:when test="${fn:containsIgnoreCase(checkImgArray, extName)}">
-	                    	<img src="/image_preview?save_file_name=${boardVO.save_file_names[idx]}" style="width:100%;">
+	                    	<c:when test="${fn:containsIgnoreCase(checkImgArray,extName)}">
+	                    		<img src="/image_preview?save_file_name=${boardVO.save_file_names[idx]}" style="width:100%;">
 	                    	</c:when>
 	                    	<c:otherwise>
-	                    	<!-- 의미없이 개발연습용 -->
-	                    		<c:out value="${checkImgArray}" /> <!-- 이미지아님 -->
+	                    		<!-- 아무의미 없이 개발연습용으로  -->
+	                    		<c:out value="${checkImgArray}" /> 이미지가 아님.
 	                    	</c:otherwise>
 	                    </c:choose>
 	                  </div>
@@ -102,12 +102,13 @@
               <button type="button" class="btn btn-danger" id="btn_delete">삭제</button>
               <button type="button" class="btn btn-default" id="btn_list">목록</button>
             </div>
-           	<input name="page" value="${pageVO.page}" type="hidden">
-           	<input name="search_type" value="${pageVO.search_type}" type="hidden">
-           	<input name="search_keyword" value="${pageVO.search_keyword}" type="hidden">
-           	<input name="bno" value="${boardVO.bno}" type="hidden">
+            <input name="page" value="${pageVO.page}" type="hidden">
+            <input name="search_type" value="${pageVO.search_type}" type="hidden">
+            <input name="search_keyword" value="${pageVO.search_keyword}" type="hidden">
+            <input name="bno" value="${boardVO.bno}" type="hidden">
           </form>
         </div>
+        
         <!-- 댓글 입력폼 -->
         <div class="col-md-12">
           <div class="card-default">
@@ -226,13 +227,18 @@
 <%@ include file="../include/footer.jsp" %>
 <script>
 $(document).ready(function(){
+	var form_view = $("form[name='form_view']");//전역변수
 	$("#btn_list").click(function(){
-		var form_view = $("form[name='form_view']");
+		//여기서는 함수내 변수
 		form_view.attr("action","/admin/board/board_list");
+		form_view.attr("method","get");
 		form_view.submit();
 	});
 	$("#btn_delete").click(function(){
-		alert('준비중입니다');
+		if(confirm('정말로 삭제 하시겠습니까?')) {//'yes' 클릭시  아래 내용실행
+			form_view.attr("action","/admin/board/board_delete");
+			form_view.submit();
+		}
 	});
 });
 </script>
