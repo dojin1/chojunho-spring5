@@ -48,6 +48,36 @@ public class AdminController {
 	@Inject
 	private CommonUtil commonUtil;
 	
+	//게시물 수정처리는 POST로만 접근가능
+	@RequestMapping(value="/admin/board/board_update", method=RequestMethod.POST)
+	public String board_update(BoardVO boardVO, PageVO pageVO) throws Exception {
+		boardService.updateBoard(boardVO);
+		String queryString = "bno="+boardVO.getBno()+"&page="+pageVO.getPage()+"&search_type="+pageVO.getSearch_type();
+		return "redirect:/admin/board/board_view?"+queryString;//수정한 이후에는 board_view페이지로 이동: 새로고침방지하기 위해서 redirect사용
+	}
+	//게시물 수정폼은 URL쿼리스트링으로 접근
+	@RequestMapping(value="/admin/board/board_update_form", method=RequestMethod.GET)
+	public String board_update_form(Model model, @RequestParam("bno") Integer bno,@ModelAttribute("pageVO") PageVO pageVO) throws Exception {
+		//첨부파일용 save_file_names, real_file_names 2개 배열값을 구해서 boardVO 입력이 필요
+		BoardVO boardVO = new BoardVO();
+		boardVO = boardService.readBoard(bno);
+		//여기서 첨부파일 배열을 추가(아래)
+		List<AttachVO> listAttachVO = boardService.readAttach(bno);
+		String[] save_file_names = new String[listAttachVO.size()]; 
+		String[] real_file_names = new String[listAttachVO.size()];
+		int idx=0;
+		//향상된 for문
+		for(AttachVO file_name:listAttachVO) {//세로데이터를 가로데이터로 변경하는 로직
+			save_file_names[idx] = file_name.getSave_file_name();
+			real_file_names[idx] = file_name.getReal_file_name();
+			idx = idx +1;//idx++
+		}
+		boardVO.setSave_file_names(save_file_names);
+		boardVO.setReal_file_names(real_file_names);
+		model.addAttribute("boardVO", boardVO);//1개레코드 저장.
+		
+		return "admin/board/board_update";//.jsp생략
+	}
 	//게시물 삭제는 URL쿼리스트링으로 접근하지 않고, post방식으로 처리.
 	@RequestMapping(value="/admin/board/board_delete", method=RequestMethod.POST)
 	public String board_delete(@RequestParam("bno")Integer bno,PageVO pageVO) throws Exception {
