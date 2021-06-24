@@ -66,7 +66,7 @@
                 <c:forEach begin="0" end="1" var="idx">
 	                <c:if test="${boardVO.save_file_names[idx] != null}">
 	                <div class="input-group">
-	                  <div class="custom-file">
+	                  <div class="">
 	                  	<!-- 첨부파일을 URL로 직접접근하지 못하기 때문에 컨트롤러로만 접근이 가능(다운로드전용 메서드생성) -->
 	                    <a href="/download?save_file_name=${boardVO.save_file_names[idx]}&real_file_name=${boardVO.real_file_names[idx]}">
 	                    ${boardVO.real_file_names[idx]}
@@ -236,7 +236,7 @@ $(document).ready(function(){
 	$("#btn_delete").click(function(){
 		if(confirm('정말로 삭제 하시겠습니까?')) {//Yes를 클릭하면 아래내용 실행
 			form_view.attr("action","/admin/board/board_delete");
-			form_view.attr("method","post");
+			form_view.attr("method", "post");
 			form_view.submit();
 		}
 	});
