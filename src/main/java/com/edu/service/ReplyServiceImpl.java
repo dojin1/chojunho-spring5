@@ -1,4 +1,3 @@
-  
 package com.edu.service;
 
 import java.util.List;
@@ -15,6 +14,7 @@ import com.edu.vo.ReplyVO;
 /**
  * 이 클래스는 댓글 DAO의 CRUD를 실행하는 서비스 클래스 입니다.
  * @author 조준호
+ *
  */
 @Service
 public class ReplyServiceImpl implements IF_ReplyService {
@@ -51,9 +51,9 @@ public class ReplyServiceImpl implements IF_ReplyService {
 	}
 
 	@Override
-	public List<ReplyVO> selectReply(PageVO pageVO) throws Exception {
+	public List<ReplyVO> selectReply(Integer bno, PageVO pageVO) throws Exception {
 		// TODO DAO객체 사용
-		return replyDAO.selectReply(pageVO);
+		return replyDAO.selectReply(bno, pageVO);
 	}
 
 }
