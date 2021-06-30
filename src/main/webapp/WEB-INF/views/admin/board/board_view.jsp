@@ -348,8 +348,8 @@ $(document).ready(function(){
 					//삭제후 모달창 숨기고, 댓글카운트UI -1처리, 댓글 리스트 리프레시(렌더링)
 					$("#modal-reply").modal("hide");
 					var reply_count = $("#reply_count").text();//Get
-					$("#reply_count").text(reply_count-1);//Set
-					$("#reply_page").val("1");//댓글 삭제한 후 1페이지로 이동
+					$("#reply_count").text(parseInt(reply_count)-1);//Set
+					$("#reply_page").val("1");//댓글을 삭제한 후 1페이지로 이동
 					replyList();
 				}
 			},
