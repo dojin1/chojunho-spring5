@@ -241,7 +241,7 @@
   <!-- /.content-wrapper -->
 
 <%@ include file="../include/footer.jsp" %>
-<!-- 모달창 초기엔 숨김상태 클릭시 활성 -->
+<!-- 모달창(초기엔 숨긴상태-수정버튼을 클릭하면 나타나는 창) -->
 <div class="modal fade" id="modal-reply">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -263,8 +263,9 @@
 		</div>
 		<!-- /.modal-content -->
 	</div>
-<!-- /모달창 -->
+<!-- /.modal-dialog -->
 </div>
+<!-- /.modal -->
 <script>
 //댓글 리스트 출력 함수
 var printReplyList = function(data, templateData, target) {
@@ -332,16 +333,36 @@ var replyList = function() {
 $(document).ready(function(){
 	//댓글 모달창 삭제버튼의 액션처리
 	$("#btn_reply_delete").click(function(){
-		
+		//댓글을 삭제할때 필요한 변수확인 2개 rno(삭제쿼리사용), bno(게시물댓글카운트업데이트에사용)
+		var rno = $("#rno").val();//모달창의 input태그의 값을 가져오기
+		var bno = "${boardVO.bno}";//자바변수값. @Controller의 model에 담긴값을 사용
+		$.ajax({
+			type:"delete",//전송타입, 컨트롤러의 RequestMethod의 값과 동일
+			url:"/reply/reply_delete/"+bno+"/"+rno,//endpoint=@RestController의 @RequestMapping(value="")
+			dataType:"text",//결과값을 받는 데이터형식 text-String, json-Map<String,Object>
+			//data:"",//처리할 값을 보내는 데이터형식 -> json을 사용하지 않고 패스베리어블 보내기때문
+			//headers:"",//크롬의 개발자도구>네트워크항목의 오른쪽 창에서 확인가능, 전송방식때문에 필요
+			success:function(result) {
+				if(result=="success") {
+					alert("삭제 되었습니다.");
+					//삭제후 모달창 숨기고, 댓글카운트 -1처리, 댓글 리스트 리프레시(렌더링)
+					$("#modal-reply").modal("hide");
+					replyList();
+				}
+			},
+			error:function() {
+				alert("RestAPI서버가 작동하지 않습니다. 다음에 시도해 주세요.");
+			}
+		});
 	});
 	//댓글 모달창 수정버튼의 액션처리
 	$("#btn_reply_update").click(function(){
-		//댓글 수정시 필요한 변수확인
-		var reply_text = $("#modal_reply_text").val();//write와 다름 modal내 태그로 변경
+		//댓글을 수정할때 필요한 변수확인
+		var reply_text = $("#modal_reply_text").val();//modal내 태그로 변경
 		var rno = $("#rno").val();//modal내 input태그로 추가
 		if(reply_text == '' || rno == '') {//&& and, || or
 			//위 조건 2중에 1개라도 만족하면 아래 내용이 실행
-			alert("댓글내용은 공백이면 안됩니다");
+			alert("댓글내용은 공백이면 않됩니다.");
 			return false;//더이상 실행없이 콜백함수를 빠져 나갑니다.
 		}
 		$.ajax({
@@ -358,10 +379,10 @@ $(document).ready(function(){
 			},//json데이터 형식으로 브라우저에 내장된 헤더값을 지정.
 			success:function(result){//댓글 입력이 성공시 실행 
 				if(result=="success") {
-					alert("수정에 성공했습니다.")
+					alert("수정에 성공했습니다.");
 					//모달창 숨기기(아래)
 					$("#modal-reply").modal("hide");
-					//댓글 입력 후 화면에 댓글 목록 출력하는 함수실행
+					//댓글 수정 후 화면에 댓글 목록 출력하는 함수실행
 					replyList();//화면의 일부분만 리프레시(재생)
 				}
 				
@@ -410,7 +431,8 @@ $(document).ready(function(){
 				$("#reply_count").text(parseInt(reply_count)+1);//011이런식 더해집니다.
 				//댓글을 신규등록 후 댓글 페이징의 1페이지로 이동하기 위해서
 				$("#reply_page").val("1");//val()로 값을 입력, input태그라는 말.
-				//댓글 입력 후 화면에 댓글 목록 출력하는 함수실행(만들예정)
+				//댓글 입력 후 화면에 댓글 목록 출력하는 함수실행
+				replyList();
 			},
 			error:function() {
 				alert("RestAPI서버가 작동하지 않습니다. 잠시 후 이용해 주세요.")
@@ -439,12 +461,12 @@ $(document).ready(function(){
 });
 </script>
 <script>
-  // 댓글 리스트에서 수정 버튼클릭시 현재 선택한 값을 모달창에 보여주는 것을 구현(아래)
-  $(document).ready(function(){
-    $('.timeline').on("click", '.div_template',function(){
-      $('#rno').val($(this).attr('data-rno'));
-      $('#modal_reply_text').val($(this).find('.timeline-body').text());
-      $('.modal-title').html($(this).find('.timeline-header').text());
-    });
+// 댓글 리스트에서 수정 버튼클릭시 현재 선택한 값을 모달창에 보여주는 것을 구현(아래)
+$(document).ready(function(){
+  $('.timeline').on("click", '.div_template',function(){
+    $('#rno').val($(this).attr('data-rno'));
+    $('#modal_reply_text').val($(this).find('.timeline-body').text());
+    $('.modal-title').html($(this).find('.timeline-header').text());
   });
-  </script>
+});
+</script>
