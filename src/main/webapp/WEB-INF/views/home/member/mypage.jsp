@@ -133,8 +133,8 @@ $(document).ready(function(){
 	$("#btn_leave").click(function(){
 		//alert("삭제버튼 준비중 입니다.");
 		var form_leave = $("form[name='join_form']");
-		alert($("select[name='enabled']").val());
-		/위 값을 false, 0 중 하나로 변경후 submit 할 예정.
+		alert($("select[name='enabled']").val())
+		//위 값을 false, 0 중 하나로 변경후 submit 할 예정.
 	});
 });
 </script>
