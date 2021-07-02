@@ -42,13 +42,19 @@ public class HomeController {
 	@Inject
 	private IF_MemberService memberService;
 	
+	//404파일 에러 처리 GET 호출 추가
+	@RequestMapping(value="/home/error/error_404", method=RequestMethod.GET)
+	public String error_404() {
+		return "home/error/error_404";//.jsp생략
+	}
 	//회원가입 처리 호출 POST방식
 	@RequestMapping(value="/join",method=RequestMethod.POST)
 	public String join(MemberVO memberVO, RedirectAttributes rdat) throws Exception {
-		//암호를 스프링 시큐리티로 인코딩 합니다.(아래)
+		//rawPassword암호를 스프링시큐리티로 인코딩 합니다.(아래)
 		String rawPassword = memberVO.getUser_pw();
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		memberVO.setUser_pw(passwordEncoder.encode(rawPassword));//암호화 실행.
+		
 		memberService.insertMember(memberVO);
 		rdat.addFlashAttribute("msg", "회원가입");//회원가입 가(이) 성공했습니다. 출력
 		return "redirect:/login_form";//페이지 리다이렉트로 이동

@@ -25,7 +25,7 @@ import com.edu.vo.BoardVO;
 import com.edu.vo.PageVO;
 
 /**
- * 이 클래스는 AOP기능중  @Aspect 와 @ControllerAdvice 로 구현됩니다.
+ * 이 클래스는 AOP기능 중 @Aspect 과 @ControllerAdvice 로 구현됩니다.
  * @author 조준호
  *
  */
@@ -91,22 +91,22 @@ public class AspectAdvice {
 		return result;
 	}
 	
-	//이 메서드는(아래) 컨트롤러에서 Exception이 발생했을때 여기서 인터셉터 해서 여러 메시지를 개발자가 작성한 jsp화면에 뿌려주는 기능을 추가
+	//이 메서드는 컨트롤러에서 Exception이 발생했을때 여기서 인터셉터(가로채기)해서 
+	//에러 메세지를 개발자가 작성한 jsp화면에 뿌려주는 기능을 추가 prevPage 변수1, exception 변수2 전송함.
 	@ExceptionHandler(Exception.class)
-	public ModelAndView errorModelAndview(Exception ex, HttpServletRequest request) {
-		//Moder(jsp로 Data담아서 보내주는 객체) + View(페이지 이동할 주소)
+	public ModelAndView errorModelAndView(Exception ex, HttpServletRequest request) {
+		//Model(jsp로 Data담아서 보내주는 객체) + View(페이지 이동할 주소)
 		ModelAndView modelAndView = new ModelAndView();
-		//이전페이지로 돌아가기용 데이터 생성(아래)
+		//이전페이지로 돌아가기용 데이터 생성
 		String referer = request.getHeader("Referer");//크롬>네트워크>파일>Referer>이전페이지 URL이 존재
-		request.getSession().setAttribute("prevpage", referer);//prevPage 세션변수사용
-		//----------------------------------------------------------
+		request.getSession().setAttribute("session_prevPage", referer);//prevPage세션변수만듭니다.
+		//---------------------------------------------
 		//컨트롤러에서 받은 Exception을 ModelAndView로 전달(아래)
-		modelAndView.addObject("exception", "ex");
-		modelAndView.setViewName("home/error_spring");//return String .jsp생략
+		modelAndView.addObject("exception", ex);
+		modelAndView.setViewName("home/error/error_spring");//return String .jsp생략
 		return modelAndView;
 	}
-	
-	//이 메서드는 컨트롤러의 메서드가 실행 전에 값을 생성해서 model객체에 담아서 jsp로 자료를 전송(아래)
+	//이 메서드는 컨트롤러의 메서드가 실행 전에 값을 생성해서 model객체에 담아서 jsp로 자료를 전송
 	//위 @컨트롤러어드바이스 를 이용해서 컨트롤러의 모든 메서드가 실행되기 호출만되면 아래 메서드가 자동실행(콜백함수) 
 	@ModelAttribute("listBoardTypeVO")
 	public List<BoardTypeVO> listBoardTypeVO() throws Exception {
