@@ -10,11 +10,17 @@
 	<!-- properties를 불러오는 스프링빈을 만듭니다.(아래) -->
 	<bean id="propertyConfigure" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
-		<list>
-		<value>classpath:properties/oracle.properties</value>
-		
-		<!-- <value>classpath:properties/hsql.properties</value> -->
-		</list>
+			<list>
+				<!-- 
+				<value>classpath:/properties/oracle.properties</value>
+				-->
+				 
+				 <value>classpath:/properties/cloude.properties</value>
+				 
+				<!-- 
+				<value>classpath:/properties/hsql.properties</value>
+				-->
+			</list>
 		</property>
 	</bean>
 	<!-- 알리아스 Alias(별명) dataSource로 만듭니다.이유? 여러개의 DB와 호환되게 만들게됩니다. -->
@@ -32,14 +38,17 @@
 	</bean>
 	
 	<!-- 위 생성DB파일에 더미데이터 생성시키는 스크립트문장(아래) 최초1회만 실행 -->
-	<!-- hsql이 아닌 다른 DB일떄는 주석처리 필수 -->
-	<!-- <jdbc:initialize-database data-source="dataSource" ignore-failures="DROPS"> 
+	<!-- hsql이 아닌 다른 DB일때는 주석처리 필수 -->
+	
+	<jdbc:initialize-database data-source="dataSource" ignore-failures="DROPS"> 
 		<jdbc:script location="classpath:/db_script/hsql_file.sql" /> 
-	</jdbc:initialize-database> -->
+	</jdbc:initialize-database>
 	
-	<!-- hsql데이터베이스 매니저실행 /embeded/hsql_file.db를 매니저에서 불러옴 -->
-	
-<!-- 	<bean depends-on="dataSource-hsql_local"
+	<!-- hsql데이터베이스 매니저실행 /embeded/hsql_file.db를 매니저에서 불러옴 
+		배포시는 항상 주석처리 합니다.
+	-->
+	<!-- 
+	<bean depends-on="dataSource-hsql_local"
 	class="org.springframework.beans.factory.config.MethodInvokingBean">
 	<property name="targetClass" value="org.hsqldb.util.DatabaseManagerSwing" />
 	<property name="targetMethod" value="main" />
@@ -53,7 +62,8 @@
 			<value></value>
 		</list>
 	</property>
-	</bean> -->
+	</bean>
+	 -->
 	<!-- 로컬(PC) 오라클 jdbc 드라이버 설정(아래) -->
 	<!-- 
 	<bean id="dataSource-oracle_local" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -77,7 +87,7 @@
 	</bean>
 	
 	<!-- 위 오라클 jdbc빈을 스프링-마이바티스 에서 사용(아래) -->
-	<!-- 오라클용 쿼리와 hsql (mysql)용 쿼리가 틀리기 떄문에 아래 쿼리 위치 수정 -->
+	<!-- 오라클용쿼리와 hsql(mysql)용 쿼리가 틀리기 때문에 아래 쿼리위치수정 -->
 	<!-- SQL세션팩토리(공장)클래스를 빈으로 생성: 쿼리를 찍어낼수 있는 메서드가 있는 클래스 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">	   
 	 	<property name="dataSource" ref="dataSource" />
