@@ -118,7 +118,9 @@
 			<scope>test</scope>
 		</dependency>  
 		
-		<!-- 이후는 기능추가시 늘어나는 영역 -->
+		<!-- 이후는 기능추가시 늘어나는 영역
+		mvnrepository.com 아티팩트ID명으로
+		 -->
 		<!-- 스프링 Test사용 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -187,6 +189,13 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>2.9.7</version>
 		</dependency>  
+		<!-- hsql 데이터베이스 사용 -->
+		<dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>2.4.1</version>
+        </dependency>
+		
 	</dependencies>
     <build>
     <defaultGoal>install</defaultGoal>
