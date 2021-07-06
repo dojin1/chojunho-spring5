@@ -36,7 +36,7 @@
 }
 </style>
 <script>
-//공통으로 사용하는 변수: 로그인성공+게시물 등록/수정/삭제 성공메세지
+//공통으로 사용하는 변수: 로그인성공+마이페이지+게시물 등록/수정/삭제 성공메세지
 if("${msg}" != "") {
 	alert("${msg} 가(이) 성공하였습니다.");
 }
@@ -64,36 +64,37 @@ if("${msg}" != "") {
 				<ul class="util clear">
 				<c:choose>
 					<c:when test="${session_enabled eq 'true'}">
-					<!-- 로그인 후 보이는 메뉴(아래) -->
-					<li><a href="#">${session_username} 님 환영합니다.</a></li>
-					<li><a href="/logout">로그아웃</a></li>
-					<li><a href="/member/mypage_form">마이페이지</a></li>
-					<!-- ROLE_ADMIN 권한만 AdminLTE에 접속가능한 조건추가(아래) -->
-					<c:if test="${session_levels eq 'ROLE_ADMIN'}">
-					<li><a href="/admin">AdminLTE</a></li>
-					</c:if>
+						<!-- 로그인 후 보이는 메뉴(아래) -->
+						<li><a href="#">${session_username} 님 환영합니다.</a></li>
+						<li><a href="/logout">로그아웃</a></li>
+						<li><a href="/member/mypage_form">마이페이지</a></li>
+						<!-- ROLE_ADMIN 권한만 AdminLTE에 가능하게 조건추가 -->
+						<c:if test="${session_levels eq 'ROLE_ADMIN'}">
+							<li><a href="/admin">AdminLTE</a></li>
+						</c:if>						
 					</c:when>
 					<c:otherwise>
 						<li><a href="/login_form">로그인</a></li>
 						<li><a href="/join_form">회원가입</a></li>
 					</c:otherwise>
-				</c:choose>
+				</c:choose>					
 				</ul>	
 				<nav>
 				<ul class="gnb clear">
-					<li><a href="board_list.html" class="openAll1">샘플홈페이지</a>
+					<li><a href="/resources/home/index.html" target="_blank" class="openAll1">샘플홈페이지</a>
 
                         <div class="gnb_depth gnb_depth2_1">
                             <ul class="submenu_list">
-                                <li><a href="board_list.html">반응형홈페이지</a></li>
+                                <li><a href="/resources/home/index.html" target="_blank">반응형홈페이지</a></li>
                             </ul>
                         </div>
 					</li>
-					<li><a href="board_list.html" class="openAll2">커뮤니티</a>
+					<li><a href="#" class="openAll2">커뮤니티</a>
 				        <div class="gnb_depth gnb_depth2_2">
                             <ul class="submenu_list">
-                                <li><a href="board_list.html">공지사항</a></li>
-                                <li><a href="board_list.html">겔러리게시판</a></li>
+                            	<c:forEach var="boardTypeVO" items="${listBoardTypeVO}">
+	                            	<li><a href="/home/board/board_list?board_type=${boardTypeVO.board_type}&search_type=">${boardTypeVO.board_name}</a></li>
+                            	</c:forEach>
                             </ul>
                         </div>
 					</li>
