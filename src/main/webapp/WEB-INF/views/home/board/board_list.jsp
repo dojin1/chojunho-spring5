@@ -13,8 +13,9 @@
 				<h2 class="tit_page">스프링 <span class="in">in</span> 자바</h2>
 				<p class="location">고객센터 <span class="path">/</span> 공지사항</p>
 				<ul class="page_menu clear">
-					<li><a href="#" class="on">공지사항</a></li>
-					<li><a href="#">문의하기</a></li>
+					<c:forEach var="boardTypeVO" items="${listBoardTypeVO}">
+						<li><a href="/home/board/board_list?board_type=${boardTypeVO.board_type}&search_keyword=" class="${boardTypeVO.board_type==session_board_type?'on':''}">${boardTypeVO.board_name}</a></li>
+					</c:forEach>					
 				</ul>
 			</div>
 		</div>	
@@ -22,16 +23,16 @@
 
 		<!-- 메인본문영역 -->
 		<div class="bodytext_area box_inner">
-		<!-- 검색폼영역 -->
-         <form id="search_form" name="search_form" action="/home/board/board_list" class="minisrch_form">
-            <fieldset>
-               <legend>검색</legend>
-               <input value="${session_search_keyword}" name="search_keyword" type="text" class="tbox" title="검색어를 입력해주세요" placeholder="검색어를 입력해주세요">
-               <button type="submit" class="btn_srch">검색</button>
-            </fieldset>
-            <input name="search_type" value="all" type="hidden">
-         </form>
-         <!-- //검색폼영역 -->
+			<!-- 검색폼영역 -->
+			<form id="search_form" name="search_form" action="/home/board/board_list" class="minisrch_form">
+				<fieldset>
+					<legend>검색</legend>
+					<input value="${session_search_keyword}" name="search_keyword" type="text" class="tbox" title="검색어를 입력해주세요" placeholder="검색어를 입력해주세요">
+					<button type="submit" class="btn_srch">검색</button>
+				</fieldset>
+				<input name="search_type" value="all" type="hidden">
+			</form>
+			<!-- //검색폼영역 -->
 			
 			<!-- 게시물리스트영역 -->
 			<table class="bbsListTbl" summary="번호,제목,조회수,작성일 등을 제공하는 표">
@@ -89,7 +90,22 @@
 			</div>
 			<!-- //페이징처리영역 -->
 			<p class="btn_line">
-				<a href="board_write.html" class="btn_baseColor">등록</a>
+			<!-- 등록버튼은 로그인한 사용자만 보이도록 -->
+			<c:if test="${session_enabled}">
+				<!-- 게시판이 공지사항일때는 관리자만 사용가능조건,공지사항외에는 로그인한 사용자는 글쓰기 기능 -->
+				<!-- 관리자일때, 일반사용자일때 1차조건, 2차조건 공지사항이 아닐때 -->
+				<c:choose>
+					<c:when test="${session_levels eq 'ROLE_ADMIN'}">
+						<a href="/home/board/board_insert" class="btn_baseColor">등록</a>
+					</c:when>
+					<c:otherwise>
+						<c:if test="${session_board_type ne 'notice'}">
+							<a href="/home/board/board_insert" class="btn_baseColor">등록</a>
+						</c:if>	
+					</c:otherwise>
+				</c:choose>
+							
+			</c:if>
 			</p>
 		</div>
 		<!-- //메인본문영역 -->
