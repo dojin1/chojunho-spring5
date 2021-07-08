@@ -36,7 +36,7 @@ import com.edu.vo.MemberVO;
 
 /**
  * 이 클래스는 이 프로젝트에서 공통으로 사용하는 유틸리티기능을 모아놓은 클래스. 
- * @author 김일국
+ * @author 조준호
  * 컨트롤러 기능 @Controller(jsp와 바인딩이 필요할때는 필수 애노테이션 입니다.)
  * 콤포턴트 @Component는 MVC가 아닌 기능들을 모아놓은 스프링빈 명시, 여기서는 jsp와 바인딩이 필요해서 사용않함 
  */
@@ -190,7 +190,7 @@ public class CommonUtil {
 				memberCnt = "0";
 			}
 		}
-		model.addAttribute("memberCnt", memberCnt);
+		model.addAttribute("memberCnt", memberCnt);//자바List,VO,String객체를 json객체로 반환함.
 		return "jsonView";//jsp파일명 대신에 servlet에서 정의한 스프링빈 ID명을 적으면, json객체로 결과를 반환합니다.
 	}
 
