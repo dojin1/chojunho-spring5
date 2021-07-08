@@ -63,6 +63,26 @@ public class HomeController {
 	//public 뷰단jsp파일명리턴형식 콜백함수(자동실행)
 	//return "파일명";
 	
+	//게시물 수정 폼 호출 GET 추가
+	@RequestMapping(value="/home/board/board_update_form",method=RequestMethod.GET)
+	public String board_update_form(@RequestParam("bno")Integer bno,@RequestParam("page")Integer page,Model model) throws Exception {
+		//1개의 레코드만 서비스로 호출 모델로 보내줌 첨부파일은 세로데이터를 가로데이터변경후 boardVO담아서전송 
+		BoardVO boardVO = new BoardVO(); 
+		boardVO = boardService.readBoard(bno);
+		//save_file_names, real_file_names 가상필드값을 채웁니다.
+		List<AttachVO> fileList = boardService.readAttach(bno);//세로데이터 생성
+		int index = 0;
+		String[] save_file_names = new String[fileList.size()];
+		String[] real_file_names = new String[fileList.size()];
+		for(AttachVO file:fileList) {//가로데이터로 변경로직
+			save_file_names[index] = file.getSave_file_name();
+			real_file_names[index] = file.getReal_file_name();
+			index = index + 1;
+		}
+		
+		model.addAttribute("boardVO", null);
+		return "home/board/board_update";//.jsp 생략 반환값은 뷰로 보여줄 파일명
+	}
 	//게시물 삭제 처리 호출 POST 추가
 	@RequestMapping(value="/home/board/board_delete",method=RequestMethod.POST)
 	public String board_delete(@RequestParam("bno")Integer bno,RedirectAttributes rdat) throws Exception {
@@ -72,7 +92,11 @@ public class HomeController {
 		boardService.deleteBoard(bno);
 		//첨부파일 있으면 삭제
 		for(AttachVO file:delFiles) {//향상된 for문에서 실행조건이 필요없이
-			File target = null;//내일 이어 작업.
+			//File 클래스는 객체를 생성할때 생성자메서드의 매개변수(경로,파일명)가 필요함.
+			File target = new File(commonUtil.getUploadPath(),file.getSave_file_name());
+			if(target.exists()) {//타켓폴더의 파일이 존재하면 삭제 구현(아래)
+				target.delete();//물리적인 UUID파일명의 파일 삭제처리.
+			}
 		}
 		rdat.addFlashAttribute("msg", "게시물 삭제");//성공시 메세지 출력용 변수
 		return "redirect:/home/board/board_list";//성공시 이동할 주소
