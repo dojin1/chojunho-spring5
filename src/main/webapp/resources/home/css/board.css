@@ -348,7 +348,7 @@ textarea:-ms-input-placeholder { color: #999; } /* ms사 브라우저에 적용 
 		float: right;
 		border: 1px solid #ccc;
 	}
-	.btn_line {text-align: center;}
+	.btn_line {text-align: right;}
 	.appForm textarea {height: 230px;}
 	/* //글쓰기 폼 스타일 */
 }
