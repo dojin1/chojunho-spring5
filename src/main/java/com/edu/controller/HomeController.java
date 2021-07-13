@@ -291,6 +291,7 @@ public class HomeController {
 		rdat.addFlashAttribute("msg", "회원정보수정");//회원정보수정 가(이) 성공했습니다. 출력용
 		return "redirect:/member/mypage_form";
 	}
+
 	//마이페이지 폼호출 GET방식, 회원수정폼이기때문에 model담아서 변수값을 전송이 필요
 	@RequestMapping(value="/member/mypage_form", method=RequestMethod.GET)
 	public String mypage_form(HttpServletRequest request, Model model) throws Exception {
