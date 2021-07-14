@@ -12,11 +12,14 @@ import org.springframework.util.StringUtils;
 
 import com.github.scribejava.core.builder.ServiceBuilder;
 import com.github.scribejava.core.model.OAuth2AccessToken;
+import com.github.scribejava.core.model.OAuthRequest;
+import com.github.scribejava.core.model.Response;
+import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth20Service;
 
 /**
  * 이 클래스는 네이버REST-API서버 URL을 생성하는 기능의 클래스 입니다.
- * @author 조준호
+ * @author User
  *
  */
 //아래 sns.~만드는 목적: 로컬과 헤로쿠의 인증 ID와 Secret를 소스에서 변경하기보단, 전역변수로 만들면 편함.
@@ -67,8 +70,8 @@ public class NaverLoginController {
 	public OAuth2AccessToken getAccessToken(HttpSession session, String code, String state) throws IOException {
 		// 네이버 인증RestApi에서 인증데이터인 토큰 값가져오기 
 		// 동작 전:현재 컨트롤러 발생된 세션의 state값, 동작 후:콜백URL 반환값에서 발생한 난수값 비교
-		String sesstionState = getSession(session);
-		if(StringUtils.pathEquals(sesstionState, state)) {
+		String sessionState = getSession(session);
+		if(StringUtils.pathEquals(sessionState, state)) {
 			//동작 전,후의 값이 같다면, 인증 토큰을 구현합니다.
 			OAuth20Service oauthService = new ServiceBuilder()
 					.apiKey(CLIENT_ID)
@@ -88,10 +91,17 @@ public class NaverLoginController {
 		return (String) session.getAttribute(SESSION_STATE);
 	}
 
-	public String getUserProfile(OAuth2AccessToken oauthToken) {
+	public String getUserProfile(OAuth2AccessToken oauthToken) throws IOException {
 		// 위 인증데이터인 토큰값으로  네이버에서 프로필내용 가져오기
-		//OAuth20Service oauthService = new ServiceBuilder().
-		return null;
+		OAuth20Service oauthService = new ServiceBuilder()
+				.apiKey(CLIENT_ID)
+				.apiSecret(CLIENT_SECRET)
+				.callback(REDIRECT_URL)
+				.build(NaverLoginApi.instance());
+		OAuthRequest request = new OAuthRequest(Verb.GET,PROFILE_API_URL,oauthService);//프로필 가져오는 객체생성
+		oauthService.signRequest(oauthToken, request);
+		Response response = request.send();//프로필 가져오는 객체를 실행
+		return response.getBody();
 	}
 	
 }
