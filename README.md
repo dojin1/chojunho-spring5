@@ -39,8 +39,48 @@
 - 위 3가지 구조는 비슷하기 때문에 1가지만 아셔도 다른 jsp템플릿 적용시 응용가능합니다.
 - 알고리즘 다이어그램기반으로 자바코딩테스트예정(깃 it강의저장소자료이용).
 
-#### 20210714(수) 작업예정.
-- 네아로 로그인 부분 마무리.
+#### 데이터의 이동
+- VO클래스의 이동: 매퍼쿼리<->DAO(M)<->Service<->Controller(C)<->jsp(V)
+
+#### 변수값(데이터) ReplyVO데이터클래스를 기준으로
+- JSON데이터: 크롬에서 부메랑으로 List<ReaplyVO>형태의 데이터확인
+- JSON데이터구조: ArrayList(표) + HashMap(Key:Value)
+
+```
+{
+    "rno": 4,
+    "reply_text": "부메랑댓글 입력테스트",
+    "replyer": "admin",
+    "reg_date": 1626310996371,
+    "update_date": 1626310996371,
+    "bno": 2
+},
+{
+    "rno": 3,
+    "reply_text": "부메랑댓글 입력테스트",
+    "replyer": "admin",
+    "reg_date": 1626310964420,
+    "update_date": 1626310964420,
+    "bno": 2
+}
+```
+- ArrayList데이터형:List<ReplyVO> replyList = new ArrayList<ReplyVO>();//DB쿼리결과
+- 위 ArrayList구조: List(인터페이스) > ArrayList(임플리먼트클래스-데이터클래스)
+- HashMap데이터형:Map<String,Object> mapData = new HashMap<String,Object>();
+- 위 HashMap구조: Map(인터페이스-메서드명) > HashMap(구현클래스)
+- Hash해시태그: 그물망(해시)=#=좌표(x,y)=(Key:Value)
+
+#### 20210715(목) 작업.
+- 데이터의 이동과 변수값처리 2가지만 아시면, 개발자로 일할 수 있음.
+- 문서작업(제출용)확인OK.(설명 후 작업시간 드릴 예정, 작업시간중 네아로 않되는 분 확인)
+- 관리자대시보드에서 회원ID 이미지업로드 및 보이기 처리예정.
+- C:\egov\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\kimilguk-spring5\resources\profile
+- URL로 접근할때는 http://localhost:8080/resources/profile/admin22
+- jsp템플릿인 tiles(타일즈) 사용.
+
+#### 20210714(수) 작업.
+- 네아로 로그인 부분 마무리.: 외부API이고, 네이버 개발자들이 만든내용.
+- 요청 URL생성 -> 인증체크(네이버로그인컨트롤러 메서드추가) -> 성공/실패/취소시 callback URL로 이동해서 처리하는 메서드 생성
 - 문서작업(제출용)예정.
 - 관리자대시보드에서 회원ID 이미지업로드 및 보이기 처리예정.
 - jsp템플릿인 tiles(타일즈) 사용.
