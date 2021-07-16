@@ -291,7 +291,6 @@ public class HomeController {
 		rdat.addFlashAttribute("msg", "회원정보수정");//회원정보수정 가(이) 성공했습니다. 출력용
 		return "redirect:/member/mypage_form";
 	}
-
 	//마이페이지 폼호출 GET방식, 회원수정폼이기때문에 model담아서 변수값을 전송이 필요
 	@RequestMapping(value="/member/mypage_form", method=RequestMethod.GET)
 	public String mypage_form(HttpServletRequest request, Model model) throws Exception {
@@ -337,7 +336,8 @@ public class HomeController {
 		pageVO.setQueryPerPageNum(5);//공지사항5개,보드타입 필요(세션으로 처리않됨)
 		pageVO.setBoard_type("notice");
 		model.addAttribute("latestNotice", boardService.selectBoard(pageVO));//공지사항 최근게시물
-		return "home/index";//확장자가 생략 .jsp가 생략되어 있음.
+		//return "home/index";//타일즈 적용 전
+		return "index.tiles";//타일즈 적용 후 tiles폴더안 index.jsp호출
 	}
 	
 }
